@@ -23,48 +23,15 @@ $$
 \end{align} 
 $$
 
-## Transforming The Equations
-
-### 1. Zero Derivative Condition
-
-The first pressure derivative on this boundary in Z-direction is one sided.
-
-
-In your second-order difference derivation there are two versions: 
-V1: f’(x) = A f(x + h1 + h2) + B f(x + h1) + C f(x)
-V2: f’(x) = D f(x - h1 - h2) + E f(x - h1) + F f(x)
-
-So, assuming positive Z is down, do I:
-Case 1: 
-Use V2 at intima-media boundary 1
-Use V1 at intima-media boundary 2
-
-
+## Discritization 
 
 $$
 \begin{align}
-\frac{\partial P_i}{\partial Z} = 0  \rightarrow \frac{P_i - P_{i-1}}{\Delta Z} = 0 \rightarrow P_i = P_{i-1} * \Delta Z \text{ @ Intima} \\
-\frac{\partial P_j}{\partial Z_j} = 0  \rightarrow \frac{P_i - P_{i+1}}{\Delta Z} = 0 \rightarrow P_i = P_{i+1} * \Delta Z \text{ @ Media} \\
-\end{align}
+&\frac{\partial^2 P}{\partial z^2}  =  \omega_4 * P(r, z - h_1 - h_2) +  \omega_5 * P(r, z - h_1) +  \omega_6 * P(r, z) = 0 \text{ @ Intima} \\  
+&\frac{\partial^2 P}{\partial z^2}  =  \omega_1 * P(r, z + h_1 + h_2) +  \omega_2 * P(r, z + h_1) +  \omega_3 * P(r, z) = 0 \text{ @ Media} \\  
+\end{align} 
 $$
 
-### 3. Final Equation
+## B-Vector
 
-$$
-\begin{align}
-&P_i = P_{i-1} * \Delta Z \text{ at Intima} \\
-&P_{i+1} = P_i * \Delta Z \text{ at Media} \\
-\end{align}
-$$
-
-# Discritization
-$$
-\begin{align}
-&P_i - P_{i-1} * \Delta Z \text{ at Intima} \\
-&P_{i+1} - P_i * \Delta Z \text{ at Media} \\
-\end{align}
-$$
-
- ## B-Vector
-No B-vector additions because the interior boundary is in the grid. 
-R direction B-vector already written on left and right sides. 
+No B-vector additions because every point adjacnet to intima-media boundary is in the grid interior, and, no r derivatives so no boundaries on left or right sides. 
