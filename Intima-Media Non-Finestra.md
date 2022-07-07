@@ -18,6 +18,7 @@ $$
 ### 1. Zero Derivative Condition
 
 The first pressure derivative on this boundary in Z-direction is one sided.
+
 $$
 \begin{align}
 \frac{\partial P_i}{\partial Z} = 0  \rightarrow \frac{P_i - P_{i-1}}{\Delta Z} = 0 \rightarrow P_i = P_{i-1} * \Delta Z \text{ @ Intima} \\
