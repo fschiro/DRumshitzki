@@ -1,4 +1,15 @@
-# Intima-Media Boundary
+# Intima-Media Boundary @ Finestra
+
+
+There are two rows in the grid for this boundary.
+
+Grid:   
+1. Intima interior end  
+2. Intima-media boundary 1 (IM1)  
+3. Intima-media boundary 2 (IM2)  
+4. Media interior start  
+ 
+For derivatives we are using one-sided second-order difference at the boundary.
 
 ## Equations
 
@@ -7,10 +18,11 @@ At the finestral hole on the intima-media boundary:
  - The change in pressure is proportional
 
 Mathematically: 
+
 $$
 \begin{align}
-&P(r, z = i) = P(r, z = m) \\[10pt]
-&W_i = W_m \\[10pt] 
+&P(r, z = IM1) = P(r, z = IM2) \\\\[10pt]
+&W_i = W_m \\  
 \end{align} 
 $$
 
@@ -22,10 +34,10 @@ $W_j$ is dimensionless velocity in Z direction for region j. $K_{pj}$ is the Dar
 
 $$
 \begin{align}
-&W_j = \frac{-K_{P_j}}{\mu} \frac{\partial P}{\partial z} \\
-&W_i = W_m \\
-&\frac{-K_{P_i}}{\mu}\frac{\partial P(r. z = i)}{\partial z}  = \frac{-K_{P_m}}{\mu} \frac{\partial P(r. z = m)}{\partial z} \\
-&K_{P_i}\frac{\partial P(r, z = i)}{\partial z}  = K_{P_m} \frac{\partial P(r, z = m)}{\partial z} \\
+&W_j = \frac{-K_{P_j}}{\mu} \frac{\partial P}{\partial z} \\\\[10pt]
+&W_i = W_m \\\\[10pt]
+&\frac{-K_{P_i}}{\mu}\frac{\partial P(r, z = IM1}{\partial z}  = \frac{-K_{P_m}}{\mu} \frac{\partial P(r,z = IM2)}{\partial z} \\\\[10pt]
+&K_{P_i}\frac{\partial P(r, z = IM1}{\partial z}  = K_{P_m} \frac{\partial P(r, z = IM2)}{\partial z} \\\\[10pt]
 \end{align} 
 $$
 
@@ -33,60 +45,36 @@ $$
 
 $$
 \begin{align}
-&P(r, z = i) = P(r, z = m)\\
-&K_{P_i} \frac{\partial P(r, z = i)}{\partial z}  - K_{P_m} \frac{\partial P(r, z = m)}{\partial z} = 0
+&P(r, z = IM1) = P(r, z = IM2) \\\\[10pt]
+&K_{P_i} \frac{\partial P(r, z = IM1}{\partial z}  - K_{P_m} \frac{\partial P(r, z = IM2)}{\partial z} = 0
 \end{align}
 $$
 
 # Discritization
 
-Assume $dZ_i = dZ_m$, so that $dz$ cancels out of equation for convienience. 
-
-### Case 1 (Inner 1-Sided Derivatives)
-
 ### Intima Side of Boundary
 
 $$
 \begin{align}
-0 = &K_{P_i} (P_i - P_{i-1}) - K_{P_m} (P_{i+1}-P_i) = 0 \\
-0 = &K_{P_i} (P_i - P_{i-1}) - 0 = 0 \\
-& (\text{ Above, intima pressure = media pressure } \rightarrow P_{i+1} = P_i) \\
+0 = &K_{P_i} \\, ( \omega_4 \\, P(r, z - 1 - 2) +  \omega_5 \\, P(r, z - 1) + \omega_6 \\, P(r, z) ) - K_{P_m} \\, (\omega_1 \\, P(r, z + 1 + 2) + \omega_2 \\, P(r, z + 1) + \omega_3 \\, P(r, z) ) = 0 \\\\[10pt]
+0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 P(r, z - 1) + (K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3) \\, P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
+0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 \\, P(r, z - 1) + (K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3 + K_{P_m} \\, \omega_2) \\, P(r, z) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
 \end{align}
 $$
+
+Above, $P(r, z) = P(r, z+1)$ since pressure at IM1 = pressure at IM2
 
 ### Media Side of Boundary
 
 $$
 \begin{align}
-0 = &K_{P_i} (P_i - P_{i-1}) - K_{P_m} (P_{i+1}-P_i) = 0 \\
-0 = &0 - K_{P_m} (P_{i+1}-P_i) = 0 \\
-& (\text{ Above, intima pressure = media pressure } \rightarrow P_{i-1} = P_i) \\
+0 = & K_{P_i} \\, ( \omega_4 \\, P(r, z - 1 - 2) +  \omega_5 \\, P(r, z - 1) +  \omega_6 \\, P(r, z) ) - K_{P_m} \\, (\omega_1 \\, P(r, z + 1 + 2) + \omega_2 \\, P(r, z + 1) + \omega_3 \\, P(r, z)) = 0 \\\\[10pt]
+0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 \\, P(r, z - 1) + ( K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3 ) P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
+0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + (K_{P_i} \\, \omega_5 + K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3) P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
 \end{align}
 $$
 
+Above, $P(r, z) = P(r, z - 1)$ since pressure at IM1 = pressure at IM2
 
-## Case 2 (Outer 1-Sided Derivatives)
-
-### Intima Side of Boundary
-
-$$
-\begin{align}
-0 = &K_{P_i} (P_i - P_{i-1}) - K_{P_m} (P_{i+2}-P_{i+1}) = 0 \\
-0 = &K_{P_i} (P_i - P_{i-1}) - K_{P_m} (P_{i+2}-P_{i}) = 0 \\
-& (\text{ Above, intima pressure = media pressure } \rightarrow P_{i+1} = P_i) \\
-0 = &(K_{P_i} + K_{P_m})P_i  - K_{P_i} P_{i-1} + K_{P_m} P_{i+2} = 0 \\
-\end{align}
-$$
- 
-### Media Side of Boundary
-
-$$
-\begin{align}
-0 = &K_{P_i} (P_{i-2} - P_{i-1}) - K_{P_m} (P_{i+1}-P_{i}) = 0 \\
-0 = &K_{P_i} (P_{i-2} - P_i) - K_{P_m} (P_{i+1}-P_{i}) = 0 \\
-& (\text{ Above, intima pressure = media pressure } \rightarrow P_{i-1} = P_i) \\
-0 = &(-K_{P_i} + K_{P_m})P_i  + K_{P_i} P_{i-2} - K_{P_m} P_{i+1} = 0 \\
-\end{align}
-$$
 
   
