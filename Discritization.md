@@ -1,6 +1,6 @@
 # Discritization
 
-## Normal Grid-Points
+## Two-Sided First-Order-Differences, First and Second Derivatives:
 
 $$
 \begin{align}
@@ -11,19 +11,24 @@ $$
 \end{align} 
 $$
 
-## Intima-Media Boundary
-
-Here, $\frac{\partial P}{\partial z}$ is one-sided into the boundary:  
+## One-Sided First-Order-Differences, First and Second Derivatives:
 
 $$
 \begin{align}
-&\text{Intima: }\frac{\partial P}{\partial z}= \frac{P(r, z) - P(r, z-1)}{dz} \\  
-&\text{Media: }\frac{\partial P}{\partial z} = \frac{P(r, z+1) - P(r, z)}{dz}
-\end{align}
+&\frac{\partial^2 P}{\partial z^2}  =  \omega_1 * P(r, z + h_1 + h_2) +  \omega_2 * P(r, z + h_1) +  \omega_3 * P(r, z) \\  
+&\frac{\partial^2 P}{\partial z^2}  =  \omega_4 * P(r, z - h_1 - h_2) +  \omega_5 * P(r, z - h_1) +  \omega_6 * P(r, z) \\  
+\end{align} 
 $$
 
-### questions
+Above, two forms are needed because we use each on both sides of a boundary. 
 
-Why is derivative one-sided?
-Is second derivative one-sided? $\frac{\partial^2 P}{\partial z^2}$ ?
-
+$$
+\begin{align}
+&\omega_1 = \frac{-h_1}{h_2 ( h_1 + h_2 ) } \\  
+&\omega_2 = \frac{h_1 + h_2}{h_1 h_2 ) } \\  
+&\omega_3 = -\frac{2h_1 + h_2}{h_2 ( h_1 + h_2 ) } \\  
+&\omega_4 = \frac{h_1}{h_2 ( h_1 + h_2 ) } \\  
+&\omega_5 = -\frac{h_1 + h_2}{h_1 h_2 ) } \\  
+&\omega_6 = \frac{2h_1 + h_2}{h_2 ( h_1 + h_2 ) } \\  
+\end{align} 
+$$
