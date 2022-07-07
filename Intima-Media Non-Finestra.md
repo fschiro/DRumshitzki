@@ -1,5 +1,15 @@
 # Intima-Media Boundary - Non-Finestra
 
+There are two rows in the grid for this boundary.
+
+Grid: 
+ Intima interior end
+ Intima-media boundary 1
+ Intima-media boundary 2
+ Media interior start
+ 
+We use one-sided second-order differences here, and these differences not cross the boundary. 
+
 ## Equations
 
 At the finestral hole on the intima-media boundary: 
@@ -18,6 +28,18 @@ $$
 ### 1. Zero Derivative Condition
 
 The first pressure derivative on this boundary in Z-direction is one sided.
+
+
+In your second-order difference derivation there are two versions: 
+V1: f’(x) = A f(x + h1 + h2) + B f(x + h1) + C f(x)
+V2: f’(x) = D f(x - h1 - h2) + E f(x - h1) + F f(x)
+
+So, assuming positive Z is down, do I:
+Case 1: 
+Use V2 at intima-media boundary 1
+Use V1 at intima-media boundary 2
+
+
 
 $$
 \begin{align}
