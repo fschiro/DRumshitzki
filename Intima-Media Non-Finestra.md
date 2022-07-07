@@ -9,7 +9,7 @@ Mathematically:
 
 $$
 \begin{align}
-&\frac{\partial P_j}{\partial Z_j} = 0 \,\, j \in \{m, i\} \\
+&\frac{\partial P_j}{\partial Z_j} = 0 \\, \\, j \in  \\{m, i \\} \\
 \end{align} 
 $$
 
