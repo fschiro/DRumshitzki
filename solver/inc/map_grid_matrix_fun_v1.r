@@ -95,7 +95,12 @@ gMapX_ipmx_jpmx <- function(i, j, gRows = 4, gCols = 5, add_i = 0, add_j = 0){
 # If you call negative index in matrix you get error so can't have values where i or j -1
 # if you call positive values no error for some reason so i+1 works
 # ======================================================== #
-map_equations_to_matrix <- function(A, rows_in_z, rows_in_r, ij = NULL, ip1j = NULL, im1j = NULL, ijp1 = NULL, ijm1 = NULL, gridPoints = NULL){
+map_equations_to_matrix <- function(
+        A, rows_in_z, rows_in_r, ij = NULL, 
+        ip1j = NULL, im1j = NULL, ip2j = NULL, im2j = NULL,
+        ijp1 = NULL, ijm1 = NULL, ijp2 = NULL, ijm2 = NULL, 
+        gridPoints = NULL
+    ){
     # gridPoints should be output of expand.grid(seq( i_points), seq(j_points) )
         # null gridpoints creates new
     # A is matrix to update
@@ -117,6 +122,17 @@ map_equations_to_matrix <- function(A, rows_in_z, rows_in_r, ij = NULL, ip1j = N
         index <- gridPoints %>% lapply(function(x) gMapX_iM1_j(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
         A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- im1j[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
     }
+    
+    if(!is.null(im2j)){
+        index <- gridpoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = -2)) %>% do.call(rbind, .)
+        A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- im2j[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
+    }
+    if(!is.null(ip2j)){
+        index <- gridpoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = 2)) %>% do.call(rbind, .)
+        A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- ip2j[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
+    }
+
+
     if(!is.null(ijp1)){
         index <- gridPoints %>% lapply(function(x) gMapX_i_jP1(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
         A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- ijp1[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
@@ -125,6 +141,15 @@ map_equations_to_matrix <- function(A, rows_in_z, rows_in_r, ij = NULL, ip1j = N
     if(!is.null(ijm1)){
         index <- gridPoints %>% lapply(function(x) gMapX_i_jM1(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
         A[ index[index[, 1] > 0 & index[, 2] > 0 ,] ] <- ijm1[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
+    }
+
+    if(!is.null(ijm2)){
+        index <- gridpoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_j = -2)) %>% do.call(rbind, .)
+        A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- ijm2[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
+    }
+    if(!is.null(ijp2)){
+        index <- gridpoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_j = 2)) %>% do.call(rbind, .)
+        A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- ijp2[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
     }
 
     A %>% return()
