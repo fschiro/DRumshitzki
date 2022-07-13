@@ -217,95 +217,46 @@ B %<>% map_equations_to_b_vector(
 
 # ================================================== #
 # Endothelial Cells
+# https://github.com/fschiro/DRumshitzki/blob/main/docs/Endothelial%20Cell.md
 # ================================================== #
-# ------- Equations ------- #
-# -W_j = a_j * Mu / K_p [P(r, zg) - P(r, zi) - S_ec * (PI(r, zg) - PI(r, zi))]
-# a_j = L_pec * L_j^*
-# W_j = -K_p / Mu D(P, z) (written in the paragraph above eq 1 in paper)
-# above gives 1 equation: 
-#   D(P, z) + a_j * [-P(r, zg) + P(r, zi) + S_ec * (PI(r, zg) - PI(r, zi))]
-# Final form:
-#   b1 * P(r, z-1) + b2 * P(r, z) + b3 * P(r, z+1) + [- a_j * P(r, zg) + a_j * P(r, zi)] = 0
-# ------- Discritization ------- #
-# D2(P, r) = 0
-# D(P, z) =  = Hu / (Hd * (Hu + Hd)) * P(r, z + Hd) - (Hu - Hd) / (Hu * Hd) * P(r, z)  + Hd / (Hu * (Hu + Hd)) * P(r, z - Hu)
-# D2(P, z) = 0
-# ------- Matrix ------- #
-# P(r + Hf, z) = 0
-# P(r - Hb, z) = 0
-# P(r, z) = (Hu - Hd) / (Hu * Hd)
-# P(r, z + Hd) = Hu / [hd * (Hu + Hd)]  + EC_BOTTOM_ONLY [ + a_j  ]
-# P(r, z - Hu) = Hd / [hu * (Hu + Hd)]  + EC_TOP_ONLY [ - a_j ]
-# P(r, zg) = P(r, z = 49)
-# P(r, zi) = P(r, z = 52)
-# ------- Notes -------- #
-# rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
-# rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
-# length(z_g) = 49 -> 50 + 51 are endothelial cells
-# The z derivative is done normally and contains points in the endothelial cells
-# But the P(r, zg) and P(r, zi) terms must be set  manually!
-# ================================================== #
+
 ec_top_gridPoints = expand.grid(50, seq(last_endo_cell)) 
 ec_bottom_gridPoints = expand.grid(51, seq(last_endo_cell))
 
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij = dpdz_ij, 
-    ip1j = dpdz_ip1j, 
-    im1j = ( dpdz_im1j  - a_gx ), 
+    ij = omega_6,
+    ip1j = zeros,
+    im1j = omega_5 + xi_g_ec,
+    ip2j = -xi_g_ec,
+    im2j = omega_4,
     ijp1 = zeros, 
-    ijm1 = zeros, 
+    ijm1 = zeros,
+    ijp2 = zeros,
+    ijm2 = zeros,
     gridPoints = ec_top_gridPoints
 )
 
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij = dpdz_ij, 
-    ip1j = ( dpdz_ip1j + a_intima ), 
-    im1j = dpdz_im1j, 
+    ij = omega_3,
+    ip1j = omega_2 - xi_i_ec,
+    im1j = zeros,
+    ip2j = omega_1,
+    im2j = xi_i_ec,
     ijp1 = zeros, 
-    ijm1 = zeros, 
+    ijm1 = zeros,
+    ijp2 = zeros,
+    ijm2 = zeros,
     gridPoints = ec_bottom_gridPoints
 )
 
-# I believe the next two lines should have a_j constant so I switched intima and glycocalx
-# P(r, z + 2) = intima from ec_top
-index_ <- ec_top_gridPoints %>% split(., seq(nrow(.))) %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = 2)) %>% do.call(rbind, .)
-A[ index_[index_[, 1] > 0 & index_[, 2] > 0] ] <- a_gx
-
-# P(r, z - 2) = gx from ec_bottom
-index_ <- ec_bottom_gridPoints %>% split(., seq(nrow(.))) %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = -2)) %>% do.call(rbind, .)
-A[ index_[index_[, 1] > 0 & index_[, 2] > 0] ] <- - a_intima
 
 
 # ================================================== #
 # Endothelial Cells - normal junction (space between EC)
+# https://github.com/fschiro/DRumshitzki/blob/main/docs/Endothelial%20Cell%20Normal%20Junction.md
 # ================================================== #
-# ------- Equations ------- #
-# EQ1: W(r, z = nj1) = W(r, z = nj2) 
-# EQ2: -W_i = a_i * Mu / K_p [P(r, zg) - P(r, zi) - S_ec * (PI(r, zg) - PI(r, zi))]
-#-------- transform equations ----- #
-# EQ1 @nj2 -> D(P, z)_nj2 + a_i * [P(r, zg) - P(r, zi) - S_nj * (PI(r, zg) - PI(r, zi))] 
-#   From: 
-#       a_i = L_pec * L_i^*
-#       W_i = -K_pi / Mu D(P, z) 
-# EQ2 @nj(1 & 2) -> Kp_gx * D(P, z)_nj1 - Kp_intima * D(P, z)_nj2
-#   From:
-#       W_i = -K_pi / Mu D(P, z)
-#   Special Discritization: 
-#       Kp_gx * [P(r, z) - P(r, zg)] / dz - Kp_intima * [P(r, zi) - P(r, z)] / dz = 0
-# ------- Derivative Discritization ------- #
-# D2(P, r) = 0
-# D(P, z) =  = Hu / (Hd * (Hu + Hd)) * P(r + Hd, z) - (Hu - Hd) / (Hu * Hd) * P(r, z)  + Hd / (Hu * (Hu + Hd)) * P(r - Hu, z)
-# D2(P, z) = 0
-# ------- Matrix ------- #
-# P(r + Hf, z) = 0
-# P(r - Hb, z) = 0
-# P(r, z) = (-Hu + Hd) / (Hu * Hd) + Kp_gx + Kp_intima
-# P(r, z + Hd) = Hu / [hd * (Hu + Hd)]
-# P(r, z - Hu) = Hd / [hu * (Hu + Hd)]
-# P(r, zg) = -Kp_gx + a_intima
-# P(r, zi) = -Kp_intima - a_intima
 # ------- Notes -------- #
 # rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
 # rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
@@ -316,22 +267,23 @@ last_nj_cell <- rows_in_r
 nj_top_gridPoints = expand.grid(50, seq(first_nj_cell, last_nj_cell)) 
 nj_bottom_gridPoints = expand.grid(51, seq(first_nj_cell, last_nj_cell)) 
 
-
 # eq2. Kp_gx * [P(r, z) - P(r, zg)] / dz - Kp_intima * [P(r, zi) - P(r, z)] / dz = 0
 # eq2 @ part 1 --> (Kp_gx - kp_intima) / dz * P(r, z) - (Kp_gx * P(r, zg)) / dz : P(r, zg) = value @ im1j
 # eq2 @ part 2 --> - (Kp_intima * P(r, zi)) / dz
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij =   (Kpg - Kpi ) * (1 / dzu),
-    ip1j = zeros, 
-    im1j = - Kpg / dzu, 
+    ij = -Kpg * omega_6,
+    im1j = -Kpg * omega_5,
+    im2j = -Kpg * omega_4,
+    ip1j = Kpg * omega_3,
+    ip2j = Kpg * omega_2,
+    ip3j = Kpg * omega_1,
+    ijm1 = zeros,
+    ijm2 = zeros,
     ijp1 = zeros, 
-    ijm1 = zeros, 
+    ijp2 = zeros,
     gridPoints = nj_top_gridPoints
 )
-# P(r, z + 2) = intima from nj_top = P(r, zi) = -(Kp_intima / dz) - a_intima
-index_ <- nj_top_gridPoints %>% split(., seq(nrow(.))) %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = 2)) %>% do.call(rbind, .)
-A[ index_[index_[, 1] > 0 & index_[, 2] > 0] ] <- -Kpi * (1 / dzd)
 
 
 # eq1. D(P, z)_nj2 + a_i * [P(r, zg) - P(r, zi) - S_nj * (PI(r, zg) - PI(r, zi))] = 0
@@ -340,17 +292,19 @@ A[ index_[index_[, 1] > 0 & index_[, 2] > 0] ] <- -Kpi * (1 / dzd)
 # eq1 + eq2 @ part 2 --> a_i * P(r, zg) - (Kp_gx * P(r, zg)) / dz 
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij = dpdz_ij + (Kpg + Kpi) * 1 / dzd, 
-    ip1j = dpdz_ip1j, 
-    im1j = dpdz_im1j - a_intima - Kpi / dzd, 
+    ij = zeros,
+    ip1j = zeros,
+    im1j = zeros,
+    ip2j = zeros, # note use xi_nj
+    im2j = zeros,
+    im3j = zeros,
     ijp1 = zeros, 
-    ijm1 = zeros, 
+    ijm1 = zeros,
+    ijp2 = zeros,
+    ijm2 = zeros,
     gridPoints = nj_bottom_gridPoints
 )
 
-# P(r, z - 2) = gx from nj_bottom = P(r, zg) = -Kp_gx + a_intima
-index_ <- nj_bottom_gridPoints %>% split(., seq(nrow(.))) %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = -2)) %>% do.call(rbind, .)
-A[ index_[index_[, 1] > 0 & index_[, 2] > 0] ] <- a_intima - Kpg / dzu
 
 
 
@@ -455,18 +409,6 @@ A %<>% map_equations_to_matrix(
     ijm1 = d2pdr_ijm1 + dpdr_ijm1, 
     gridPoints = not_finestra_media_top_gridPoints
 )
-
-
-# ==================================================== #
-# TO DO
-# ==================================================== #
-# 1. Wiki - endo + Left + Right boundaries + normal equations
-# 5. Create update concentration function 
-# 6. Finalize
-
-# change all comments: P(r, z+1) to P_ijp1
-
-
 
 
 # i = dz
