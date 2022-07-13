@@ -48,6 +48,12 @@ Kpm <- Lpm * mu * Lmstar # Darcy permeability (Media)
 Kpg <- 4.08 * 1e-18 # Darcy permeability [m]^2 (GX) (Source: Shripad Table1 * 10^-4)
 Kpi <- 2.20 * 1e-16 # Darcy permeability [m]^2 (intima) (Source: Shripad Table1 * 10^-4)
 
+# coefficients for shripad equation 6
+# https://github.com/fschiro/DRumshitzki/blob/main/docs/Endothelial%20Cell.md
+xi_g_ec <- (mu^2 * Lpe * Lgstar) / Kpg^2 
+xi_i_ec <- (mu^2 * Lpe * Listar) / Kpi^2 
+xi_nj <- (mu^2 * Lp_nj * Listar) / Kpi^2 
+
 h_i <- Listar / rfstar # Ratio - region-thickness / finestral pore readius
 h_m <- Lmstar / rfstar # Ratio - region-thickness / finestral pore readius
 h_g <- Lgstar / rfstar # Ratio - region-thickness / finestral pore readius
@@ -157,8 +163,8 @@ last_endo_cell = max_ec
 # Important Variables:
 # -- dz_up & dz_down 
 #        A column of delta-z values
-#        repeat the last point of glycocalx
-#        This duplicates the last distance for second endothelial cell
+# -- dz2_up & dz2_down
+#        Difference between point z[i] - z[i-2]
 # 
 # -- dzu & dzd
 #        Matrix of delta-z values
@@ -169,28 +175,41 @@ last_endo_cell = max_ec
 #        
 # ======================================================== #
 
-
-
 z_g <- glycoGrid$zg
 dz_g <- z_g[2:length(z_g)] - z_g[1:(length(z_g) - 1)]
+dz_g2 <- z_g[3:length(z_g)] - z_g[1:(length(z_g) - 2)]
 dz_g_forward <- c(dz_g, dz_g[length(dz_g)]) # distance point 1 to boundary = distance point 1 to point 2
 dz_g_backward <- c(dz_g[1], dz_g) # distance point 1 to boundary = distance point 1 to point 2
+dz_g2_forward <- c(dz_g2, rep(dz_g2[length(dz_g2)], 2)) # distance point 1 to boundary = distance point 1 to point 2
+dz_g2_backward <- c(rep(dz_g2[1], 2), dz_g2) # distance point 1 to boundary = distance point 1 to point 2
+
 
 z_i <- intimaGrid$zi
 dz_i <- z_i[2:length(z_i)] - z_i[1:(length(z_i) - 1)]
-dz_i_forward <- c(dz_i, dz_i[length(dz_i)]) # distance point 1 to boundary = distance point 1 to point 2
-dz_i_backward <- c(dz_i[1], dz_i) # distance point 1 to boundary = distance point 1 to point 2
+dz_i2 <- z_i[3:length(z_i)] - z_i[1:(length(z_i) - 2)]
+dz_i_forward <- c(dz_i, dz_i[length(dz_i)])
+dz_i_backward <- c(dz_i[1], dz_i) 
+dz_i2_forward <- c(dz_i2, rep(dz_i2[length(dz_i2)], 2))
+dz_i2_backward <- c(rep(dz_i2[1], 2), dz_i2) 
+
 
 z_m <- mediaGrid$zm
 dz_m <- z_m[2:length(z_m)] - z_m[1:(length(z_m) - 1)]
-dz_m_forward <- c(dz_m, dz_m[length(dz_m)]) # distance point 1 to boundary = distance point 1 to point 2
-dz_m_backward <- c(dz_m[1], dz_m) # distance point 1 to boundary = distance point 1 to point 2
+dz_m2 <- z_m[3:length(z_m)] - z_m[1:(length(z_m) - 2)]
+dz_m_forward <- c(dz_m, dz_m[length(dz_m)])
+dz_m_backward <- c(dz_m[1], dz_m) 
+dz_m2_forward <- c(dz_m2, rep(dz_m2[length(dz_m2)], 2))
+dz_m2_backward <- c(rep(dz_m2[1], 2), dz_m2) 
 
 dz_up <- dz_g_backward %>% c(., .[length(.)],  dz_i_backward[1], dz_i_backward, dz_m_backward) # i - 1
 dz_down <- dz_g_forward %>% c(., .[length(.)], dz_i_forward[1], dz_i_forward, dz_m_forward) # i + 1
+dz2_up <- dz_g2_backward %>% c(., .[length(.)],  dz_i2_backward[1], dz_i2_backward, dz_m2_backward) # i - 2
+dz2_down <- dz_g2_forward %>% c(., .[length(.)], dz_i2_forward[1], dz_i2_forward, dz_m2_forward) # i + 2
 
 dzu <- dz_up %>% lapply(function(i) rep(i, rows_in_r)) %>% unlist
 dzd <- dz_down %>% lapply(function(i) rep(i, rows_in_r)) %>% unlist
+dz2u <- dz2_up %>% lapply(function(i) rep(i, rows_in_r)) %>% unlist
+dz2d <- dz2_down %>% lapply(function(i) rep(i, rows_in_r)) %>% unlist
 
 rows_in_z <- (length(z_i) + length(z_g) + length(z_m) + 2) # 2 for endothelial cells
 
@@ -262,65 +281,6 @@ Kp %<>% c(.,
 # ================================================== #
 zeros = rep(0, rows_in_r * rows_in_z)
 
-# ================================================== #
-# Main equations over all points
-# ================================================== #
-# ------- Equations ------- #
-# h^2 * (D2(P, r) + 1/r * D(P, r) ) + D2(P, z) = 0
-# ------- Discritization ------- #
-# D2(P, r) = 2 / (Hf * (Hb + Hf)) * P(r + Hf, z) - 2 / (Hb * Hf) * P(r, z)  + 2 / (Hb * (Hb + Hf)) * P(r - Hb, z)
-# D(P, r) = Hb / (Hf * (Hb + Hf)) * P(r + Hf, z) - (Hb - Hf) / (Hb * Hf) * P(r, z)  + Hf / (Hb * (Hb + Hf)) * P(r - Hb, z)
-# D2(P, z) = 2 / (Hd * (Hd + Hu)) * P(r, z + Hd) - 2 / (Hd * Hu) * P(r, z)  + 2 / (Hu * (Hd + Hu)) * P(r, z - Hu)
-# ------- Matrix ------- #
-# P(r + Hf, z) = h^2 * ( 2 / (Hf * (Hb + Hf)) + [1 / r] * Hb / (Hf * (Hb + Hf)) )
-# P(r - Hb, z) = h^2 * ( 2 / (Hb * (Hb + Hf)) + [1 / r] * Hf / (Hb * (Hb + Hf)) )
-# P(r, z) = h^2 * (- 2 / (Hb * Hf) - [1 / r] * (Hb - Hf) / (Hb * Hf) ) - 2 / (Hd * Hu)
-# P(r, z + Hd) = 2 / (Hd * (Hd + Hu))
-# P(r, z - Hu) = 2 / (Hu * (Hd + Hu)
-# ------- Notes ------- #
-# rows_in_r is the number of r points should probably be renamed 'columns_in_r'
-# ================================================== #
-# ------------------------- #
-# D2(P, r) * H_SQR
-# ------------------------- #
-# P(r, z) [- 2 / (Hb * Hf) ]
-d2pdr_ij <- H_SQR * rep(-2 / (dr_forward * dr_backward), rows_in_z)
-# P(r + Hf, z) 2 / (Hf * (Hb + Hf)) * P(r + Hf, z)
-d2pdr_ijp1 <- H_SQR * rep(2 / (dr_forward * (dr_forward + dr_backward)), rows_in_z) 
-# P(r - Hb, z) 2 / (Hb * (Hb + Hf)) * P(r - Hb, z)
-d2pdr_ijm1 <- H_SQR * rep(2 / (dr_backward * (dr_forward + dr_backward)), rows_in_z)
-
-# ------------------------- #
-# D(P, r) * [1 / r] * H_SQR
-# ------------------------- #
-# P(r, z)  [- (Hb - Hf) / (Hb * Hf) ] 
-dpdr_ij <- H_SQR * rep( (-dr_backward + dr_forward) / (dr_backward * dr_forward) * r_inverse, rows_in_z )
-# P(r + Hf, z)  Hb / (Hf * (Hb + Hf)) 
-dpdr_ijp1 <- H_SQR * rep( dr_backward / (dr_forward * (dr_forward + dr_backward) ) * 1 / r, rows_in_z )
-# P(r - Hb, z)  Hf / (Hb * (Hb + Hf))
-dpdr_ijm1 <- H_SQR * rep( dr_forward / (dr_backward * (dr_forward + dr_backward) ) * 1 / r, rows_in_z )
-
-# ------------------------- #
-# D2(P, z)
-# ------------------------- #
-# P(r, z)   -2 / (Hd * Hu)
-d2pdz_ij <- - 2 / (dzu * dzd)
-# P(r, z + Hd)    2 / (Hd * (Hd + Hu))
-d2pdz_ip1j <- 2 / (dzd * (dzu + dzd)) 
-# P(r, z - Hu)    2 / (Hu * (Hd + Hu)) 
-d2pdz_im1j <- 2 / (dzu * (dzu + dzd))
-
-# ------------------------- #
-# D(P, z) (for endothelial cells)
-# ------------------------- #
-# D(P, z) = Hu / (Hd * (Hu + Hd)) * P(r, z + Hd) - (Hu - Hd) / (Hu * Hd) * P(r, z)  + Hd / (Hu * (Hu + Hd)) * P(r, z - Hu)
-
-# P(r, z) = (Hu - Hd) / (Hu * Hd)
-dpdz_ij <- (dzu - dzd) / (dzu * dzd)
-# P(r, z + Hd) = Hu / [hd * (Hu + Hd)] + EC_BOTTOM_ONLY [ + a_j  ]
-dpdz_ip1j <- dzu / ( dzd * (dzu + dzd) )
-# P(r, z + Hd) = Hu / [hd * (Hu + Hd)] + EC_TOP_ONLY [ - a_j ]
-dpdz_im1j <- dzd / ( dzu * (dzu + dzd) )
 
 
 
