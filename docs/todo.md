@@ -11,3 +11,4 @@
 
 4. Add 2-layer boundary for intima-media
 5. Re-create derivative scheme with beta coefficient variable names
+6. Plan inverse, adding concentration to EC, concentration matrix docs
