@@ -17,7 +17,7 @@ Equation (6) from Shripad 2020
 
 $$
 \begin{align}
--W_j = & \frac{L_{p_EC}} \\, \mu \\, L_j^{*}}{K_{p_j}} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\: (j=g,i) \\  
+-W_j = & \frac{L_{p_EC} \\, \mu \\, L_j^{*}}{K_{p_j}} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\: (j=g,i) \\  
 \end{align} 
 $$
 
@@ -30,11 +30,11 @@ $W_j$ is dimensionless velocity in Z direction for region j. $K_{pj}$ is the Dar
 $$
 \begin{align}
 W_j = &\frac{-K_{P_j}}{\mu} \frac{\partial P}{\partial z} \\\\[10pt]
--\frac{-K_{P_j}}{\mu} \frac{\partial P}{\partial z} = &\frac{L_{p_EC}}  \mu  L_j^{*}}{K_{p_j}} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
-\frac{\partial P}{\partial z} = & \frac{\mu}{K_{P_j}}   \frac{L_{p_EC}}  \mu  L_j^{*}}{K_{p_j}} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
-\frac{\partial P}{\partial z} = & \frac{\mu^2}{K_{P_j}^2} L_{p_EC}}   L_j^{*} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
-0 = & -\frac{\partial P}{\partial z} + \frac{\mu^2}{K_{P_j}^2} L_{p_EC}}   L_j^{*} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
-\text{Let } \xi_j = &\frac{\mu^2}{K_{P_j}^2} L_{p_EC}}   L_j^{*} \\\\[10pt]  
+-\frac{-K_{P_j}}{\mu} \frac{\partial P}{\partial z} = &\frac{L_{p_EC}  \mu  L_j^{*}}{K_{p_j}} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
+\frac{\partial P}{\partial z} = & \frac{\mu}{K_{P_j}}   \frac{L_{p_EC}  \mu  L_j^{*}}{K_{p_j}} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
+\frac{\partial P}{\partial z} = & \frac{\mu^2}{K_{P_j}^2} L_{p_EC}   L_j^{*} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
+0 = & -\frac{\partial P}{\partial z} + \frac{\mu^2}{K_{P_j}^2} L_{p_EC}   L_j^{*} [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)] \\\\[10pt]  
+\text{Let } \xi_j = &\frac{\mu^2}{K_{P_j}^2 L_{p_EC}}   L_j^{*} \\\\[10pt]  
 0 = & -\frac{\partial P}{\partial z} + \xi_j [P_g - P_i - \sigma_{EC}(\pi_g - \pi_i)]
 \end{align} 
 $$
