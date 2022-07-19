@@ -57,8 +57,8 @@ $$
 $$
 \begin{align}
 0 = &K_{P_i} \\, ( \omega_4 \\, P(r, z - 1 - 2) +  \omega_5 \\, P(r, z - 1) + \omega_6 \\, P(r, z) ) - K_{P_m} \\, (\omega_1 \\, P(r, z + 1 + 2) + \omega_2 \\, P(r, z + 1) + \omega_3 \\, P(r, z) ) = 0 \\\\[10pt]
-0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 P(r, z - 1) + (K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3) \\, P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
-0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 \\, P(r, z - 1) + (K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3 + K_{P_m} \\, \omega_2) \\, P(r, z) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
+= & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 P(r, z - 1) + (K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3) \\, P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
+= & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 \\, P(r, z - 1) + (K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3 + K_{P_m} \\, \omega_2) \\, P(r, z) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
 \end{align}
 $$
 
@@ -69,8 +69,8 @@ Above, $P(r, z) = P(r, z+1)$ since pressure at IM1 = pressure at IM2
 $$
 \begin{align}
 0 = & K_{P_i} \\, ( \omega_4 \\, P(r, z - 1 - 2) +  \omega_5 \\, P(r, z - 1) +  \omega_6 \\, P(r, z) ) - K_{P_m} \\, (\omega_1 \\, P(r, z + 1 + 2) + \omega_2 \\, P(r, z + 1) + \omega_3 \\, P(r, z)) = 0 \\\\[10pt]
-0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 \\, P(r, z - 1) + ( K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3 ) P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
-0 = & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + (K_{P_i} \\, \omega_5 + K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3) P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
+= & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + K_{P_i} \\, \omega_5 \\, P(r, z - 1) + ( K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3 ) P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
+= & K_{P_i} \\, \omega_4 \\, P(r, z - 1 - 2) + (K_{P_i} \\, \omega_5 + K_{P_i} \\, \omega_6 + K_{P_m} \\, \omega_3) P(r, z) + K_{P_m} \\, \omega_2 \\, P(r, z + 1) + K_{P_m} \\, \omega_1 \\, P(r, z + 1 + 2) \\\\[10pt]
 \end{align}
 $$
 
