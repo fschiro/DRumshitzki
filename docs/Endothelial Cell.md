@@ -67,8 +67,8 @@ $$
 
 $$
 \begin{align}
-0 = & \omega_1 \\, P(r, z + 1 + 2) + \omega_2 \\, P(r, z + 1) + \omega_3 \\, P(r, z) + \xi_j [P(r, z - 2) - P(r, z + 1) - \sigma_{EC}(\pi(r, z-2) - \pi(r, z + 1))] \\\\[10pt]
-0 = & \omega_1 \\, P(r, z + 1 + 2) + (\omega_2 - \xi_j) \\, P(r, z + 1) + \omega_3 \\, P(r, z) + \xi_j \\, P(r, z - 2) - \xi_j \\, \sigma_{EC} \\, \pi(r, z-2) + \xi_j \\, \sigma_{EC} \\, \pi(r, z + 1) \\\\[10pt]
+= & \omega_1 \\, P(r, z + 1 + 2) + \omega_2 \\, P(r, z + 1) + \omega_3 \\, P(r, z) + \xi_j [P(r, z - 2) - P(r, z + 1) - \sigma_{EC}(\pi(r, z-2) - \pi(r, z + 1))] \\\\[10pt]
+= & \omega_1 \\, P(r, z + 1 + 2) + (\omega_2 - \xi_j) \\, P(r, z + 1) + \omega_3 \\, P(r, z) + \xi_j \\, P(r, z - 2) - \xi_j \\, \sigma_{EC} \\, \pi(r, z-2) + \xi_j \\, \sigma_{EC} \\, \pi(r, z + 1) \\\\[10pt]
 \end{align}
 $$
 
