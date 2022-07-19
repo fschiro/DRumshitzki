@@ -105,5 +105,16 @@ P(r, z + 1) (K_{P_i} \omega_2 + (-\omega_2 + \xi_{nj}) -\xi_{nj}) +
 P(r, z + 2) (K_{P_i} \omega_1 - \omega_1) + 
 \pi(r, z-2) (-\sigma_{EC} * \xi_{nj}) +
 \pi(r, z+1) (\sigma_{EC} * \xi_{nj})
+\\\\[10pt] 
+= & 
+P(r, z - 3) (-K_{P_g} \omega_4) + 
+P(r, z - 2) (-K_{P_g} \omega_5 + \xi_{nj}) + 
+P(r, z - 1) (-K_{P_g} \omega_6) + 
+P(r, z) (K_{P_i} \omega_3 - \omega_3) + 
+\\\\[10pt] & 
+P(r, z + 1) (K_{P_i} \omega_2 -\omega_2 ) + 
+P(r, z + 2) (K_{P_i} \omega_1 - \omega_1) + 
+\pi(r, z-2) (-\sigma_{EC} * \xi_{nj}) +
+\pi(r, z+1) (\sigma_{EC} * \xi_{nj})
 \end{align}
 $$
