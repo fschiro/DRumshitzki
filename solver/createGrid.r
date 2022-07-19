@@ -65,30 +65,15 @@ B <- Matrix(nrow = dimA, ncol = 1, data = 0, sparse = TRUE)
 # ================================================== #
 # Main equations over all points
 # ================================================== #
-# ------- Equations ------- #
 # h^2 * (D2(P, r) + 1/r * D(P, r) ) + D2(P, z) = 0
-# ------- Discritization ------- #
-# D2(P, r) = 2 / (Hf * (Hb + Hf)) * P(r + Hf, z) - 2 / (Hb * Hf) * P(r, z)  + 2 / (Hb * (Hb + Hf)) * P(r - Hb, z)
-# D(P, r) = Hb / (Hf * (Hb + Hf)) * P(r + Hf, z) - (Hb - Hf) / (Hb * Hf) * P(r, z)  + Hf / (Hb * (Hb + Hf)) * P(r - Hb, z)
-# D2(P, z) = 2 / (Hd * (Hd + Hu)) * P(r, z + Hd) - 2 / (Hd * Hu) * P(r, z)  + 2 / (Hu * (Hd + Hu)) * P(r, z - Hu)
-# ------- Matrix ------- #
-# P(r + Hf, z) = h^2 * ( 2 / (Hf * (Hb + Hf)) + [1 / r] * Hb / (Hf * (Hb + Hf)) )
-# P(r - Hb, z) = h^2 * ( 2 / (Hb * (Hb + Hf)) + [1 / r] * Hf / (Hb * (Hb + Hf)) )
-# P(r, z) = h^2 * (- 2 / (Hb * Hf) - [1 / r] * (Hb - Hf) / (Hb * Hf) ) - 2 / (Hd * Hu)
-# P(r, z + Hd) = 2 / (Hd * (Hd + Hu))
-# P(r, z - Hu) = 2 / (Hu * (Hd + Hu)
-# ------- Notes ------- #
-# rows_in_r is the number of r points should probably be renamed 'columns_in_r'
-# ================================================== #
-
 
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij = d2pdr_ij + dpdr_ij + d2pdz_ij, 
-    ip1j = d2pdz_ip1j, 
-    im1j = d2pdz_im1j, 
-    ijp1 = d2pdr_ijp1 + dpdr_ijp1, 
-    ijm1 = d2pdr_ijm1 + dpdr_ijm1, 
+    ij = betaAlt_2 + gammaAlt_2 + beta_5, 
+    ip1j = beta_6, 
+    im1j = beta_4, 
+    ijp1 = betaAlt_3 + gammaAlt_3, 
+    ijm1 = betaAlt_1 + gammaAlt_1, 
     gridPoints = NULL
 )
 
@@ -130,11 +115,11 @@ gridPoints_right = expand.grid(seq(rows_in_z), rows_in_r)
 # apply to matrices
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij = d2pdr_ij + d2pdz_ij, 
+    ij = betaAlt_2 + beta_5, 
     ip1j = NULL, # don't need - did it last section and we don't overwrite if NULL
     im1j = NULL, # don't need - did it last section and we don't overwrite if NULL
     ijp1 = NULL,
-    ijm1 = d2pdr_ijm1,
+    ijm1 = betaAlt_1,
     gridPoints = gridPoints_left
 )
 B %<>% map_equations_to_b_vector(
@@ -143,16 +128,16 @@ B %<>% map_equations_to_b_vector(
     ip1j = NULL, 
     im1j = NULL, 
     ijp1 = NULL, 
-    ijm1 = d2pdr_ijm1, 
+    ijm1 = betaAlt_1, 
     gridPoints = gridPoints_left
 )
 
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij = d2pdr_ij + d2pdz_ij, 
+    ij = betaAlt_2 + beta_5, 
     ip1j = NULL, 
     im1j = NULL, 
-    ijp1 = d2pdr_ijp1, 
+    ijp1 = betaAlt_3, 
     ijm1 = NULL, 
     gridPoints = gridPoints_right
 )
@@ -161,7 +146,7 @@ B %<>% map_equations_to_b_vector(
     ij = NULL, 
     ip1j = NULL, 
     im1j = NULL, 
-    ijp1 = d2pdr_ijp1, 
+    ijp1 = betaAlt_3, 
     ijm1 = NULL, 
     gridPoints = gridPoints_right
 )
@@ -171,25 +156,9 @@ B %<>% map_equations_to_b_vector(
 # ================================================== #
 # Top, bottom boundaries
 # ================================================== #
-# ------- Equations ------- #
 # h^2 * (D2(P, r) + 1/r * D(P, r) ) + D2(P, z) = 0
 # Pg = 1 @ z = GX top
 # Pm = 0 @ z = Media bottom
-# ------- Discritization ------- #
-# D2(P, r) = 2 / (Hf * (Hb + Hf)) * P(r + Hf, z) - 2 / (Hb * Hf) * P(r, z)  + 2 / (Hb * (Hb + Hf)) * P(r - Hb, z)
-# D(P, r) = Hb / (Hf * (Hb + Hf)) * P(r + Hf, z) - (Hb - Hf) / (Hb * Hf) * P(r, z)  + Hf / (Hb * (Hb + Hf)) * P(r - Hb, z)
-# D2(P, z) = 2 / (Hd * (Hd + Hu)) * P(r, z + Hd) - 2 / (Hd * Hu) * P(r, z)  + 2 / (Hu * (Hd + Hu)) * P(r, z - Hu)
-# ------- Matrix ------- #
-# P(r + Hf, z) = h^2 * ( 2 / (Hf * (Hb + Hf)) + [1 / r] * Hb / (Hf * (Hb + Hf)) )
-# P(r - Hb, z) = h^2 * ( 2 / (Hb * (Hb + Hf)) + [1 / r] * Hf / (Hb * (Hb + Hf)) )
-# P(r, z) = h^2 * (- 2 / (Hb * Hf) - [1 / r] * (Hb - Hf) / (Hb * Hf) ) - 2 / (Hd * Hu)
-# P(r, z + Hd) = 2 / (Hd * (Hd + Hu))
-# P(r, z - Hu) = 2 / (Hu * (Hd + Hu)
-# ------- Notes -------- #
-# Nothing is changing in matrix A for top + bottom boundaries. 
-# im1j = 1 implies that B = 1 for top_gridpoints
-# ip1j = 0 implies B = 0 for bottom gridpoints
-# ================================================== #
 
 gridPoints_top = expand.grid(1, seq(rows_in_r))
 gridPoints_bot = expand.grid(rows_in_z, seq(rows_in_r))
@@ -291,22 +260,20 @@ A %<>% map_equations_to_matrix(
 # eq1 + eq2 @ part 1 --> D(P, z)_nj2 + (Kp_gx - kp_intima) / dz * P(r, z) + - P(r, zi) * a_i - (Kp_intima * P(r, zi)) / dz
 # eq1 + eq2 @ part 2 --> a_i * P(r, zg) - (Kp_gx * P(r, zg)) / dz 
 A %<>% map_equations_to_matrix(
-    rows_in_z, rows_in_r, 
-    ij = zeros,
-    ip1j = zeros,
-    im1j = zeros,
-    ip2j = zeros, # note use xi_nj
-    im2j = zeros,
-    im3j = zeros,
-    ijp1 = zeros, 
-    ijm1 = zeros,
-    ijp2 = zeros,
-    ijm2 = zeros,
-    gridPoints = nj_bottom_gridPoints
+    rows_in_z, rows_in_r
+    ,ij = Kpi * omega_3 - omega_3
+    ,ip1j = Kpi * omega_2 - omega_2
+    ,ip2j = Kpi * omega_1 - omega_1
+    ,ip3j = zeros
+    ,im1j = -Kpg * omega_6
+    ,im2j = -Kpg * omega_5 + xi_nj
+    ,im3j = -Kpg * omega_4
+    ,ijp1 = zeros 
+    ,ijm1 = zeros
+    ,ijp2 = zeros
+    ,ijm2 = zeros
+    ,gridPoints = nj_bottom_gridPoints
 )
-
-
-
 
 
 
@@ -341,73 +308,85 @@ B[ index_nj_bottom ] <- B[ index_nj_bottom ] + sigma_ec * concentration_[ index_
 
 # ================================================== #
 # Intima-Media boundary - Finestra hole
-# ================================================== #
-# ------- Notes -------- #
-# rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
-# rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
-# No B-Vector 
+# Docs: https://github.com/fschiro/DRumshitzki/blob/main/docs/Intima-Media%20Finestra.md
 # ================================================== #
 
 intima_bottom_gridPoints <- expand.grid(136, seq(last_finestra_cell))
 media_top_gridPoints <- expand.grid(137, seq(last_finestra_cell)) 
 
-kpi_by_dz <- Kpi / dzu
-kpm_by_dz <- Kpm / dzd
-
 A %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
-    ij =   d2pdr_ij + dpdr_ij + d2pdz_ij + d2pdz_ip1j + kpi_by_dz, # d2pdz_ip1j bc EQ1
-    ip1j = zeros, 
-    im1j = d2pdz_im1j - kpi_by_dz, 
-    ijp1 = d2pdr_ijp1 + dpdr_ijp1, 
-    ijm1 = d2pdr_ijm1 + dpdr_ijm1, 
-    gridPoints = intima_bottom_gridPoints
+    ij = Kpi * omega_6 + Kpm * omega_3 + Kpm * omega_2
+    ,im1j = Kpi * omega_5
+    ,im2j = Kpi * omega_4
+    ,ip1j = zeros
+    ,ip2j = Kpm * omega_1
+    ,ip3j = zeros
+    ,ijm1 = zeros
+    ,ijm2 = zeros
+    ,ijp1 = zeros 
+    ,ijp2 = zeros
+    ,gridPoints = intima_bottom_gridPoints
 )
 
 A %<>% map_equations_to_matrix(
-    rows_in_z, rows_in_r, 
-    ij =   d2pdr_ij + dpdr_ij + d2pdz_ij + d2pdz_im1j + kpm_by_dz, # d2pdz_ip1j bc EQ1
-    ip1j = d2pdz_ip1j - kpm_by_dz,
-    im1j = zeros, 
-    ijp1 = d2pdr_ijp1 + dpdr_ijp1, 
-    ijm1 = d2pdr_ijm1 + dpdr_ijm1, 
-    gridPoints = media_top_gridPoints
+    rows_in_z, rows_in_r
+    ,ij = Kpi * omega_5 + Kpi * omega_6 + Kpm * omega_3
+    ,im1j = zeros
+    ,im2j = Kpi * omega_4
+    ,ip1j = Kpm * omega_2
+    ,ip2j = Kpm * omega_1
+    ,ip3j = zeros
+    ,ijm1 = zeros
+    ,ijm2 = zeros
+    ,ijp1 = zeros 
+    ,ijp2 = zeros
+    ,gridPoints = media_top_gridPoints
 )
 
 
 
 # ================================================== #
 # Intima-Media boundary - Non-Finestra
+# Docs: https://github.com/fschiro/DRumshitzki/blob/main/docs/Intima-Media%20Non-Finestra.md
 # ================================================== #
 # rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
 # rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
-# No B-Vector 
-# ================================================== #
-
 
 non_finestra_sequence_r = seq(first_non_finestra_cell, last_non_finestra_cell)
 not_finestra_intima_bottom_gridPoints = expand.grid(136, non_finestra_sequence_r)
 not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r) 
 
 
+
 A %<>% map_equations_to_matrix(
-    rows_in_z, rows_in_r, 
-    ij =   d2pdr_ij + dpdr_ij + d2pdz_ij + d2pdz_im1j * dzu,
-    ip1j = d2pdz_ip1j, 
-    im1j = zeros, 
-    ijp1 = d2pdr_ijp1 + dpdr_ijp1, 
-    ijm1 = d2pdr_ijm1 + dpdr_ijm1, 
-    gridPoints = not_finestra_intima_bottom_gridPoints
+    rows_in_z, rows_in_r
+    ,ij = omega_6
+    ,im1j = omega_5
+    ,im2j = omega_4
+    ,ip1j = zeros
+    ,ip2j = zeros
+    ,ip3j = zeros
+    ,ijm1 = zeros
+    ,ijm2 = zeros
+    ,ijp1 = zeros 
+    ,ijp2 = zeros
+    ,gridPoints = not_finestra_intima_bottom_gridPoints
 )
 
 A %<>% map_equations_to_matrix(
-    rows_in_z, rows_in_r, 
-    ij =   d2pdr_ij + dpdr_ij + d2pdz_ij + d2pdz_ip1j * dzd,
-    ip1j = zeros,
-    im1j = d2pdz_im1j, 
-    ijp1 = d2pdr_ijp1 + dpdr_ijp1, 
-    ijm1 = d2pdr_ijm1 + dpdr_ijm1, 
-    gridPoints = not_finestra_media_top_gridPoints
+    rows_in_z, rows_in_r
+    ,ij = omega_3
+    ,im1j = zeros
+    ,im2j = zeros
+    ,ip1j = omega_2
+    ,ip2j = omega_1
+    ,ip3j = zeros
+    ,ijm1 = zeros
+    ,ijm2 = zeros
+    ,ijp1 = zeros 
+    ,ijp2 = zeros
+    ,gridPoints = not_finestra_media_top_gridPoints
 )
 
 
