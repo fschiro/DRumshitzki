@@ -11,6 +11,31 @@ $$
 \end{align} 
 $$
 
+$$
+\begin{equation}
+  \begin{split}
+    \beta_1 &= \frac{ 2 }{ Hb * (Hb + Hf) } \\\\[10pt]
+    \beta_4 &= \frac{ 2 }{ Hu * (Hd + Hu) } \\\\[10pt]
+    \gamma_1 &= \frac{ Hf }{ Hb * (Hb + Hf) } \\\\[10pt]
+    \gamma_4 &= \frac{ Hd } {hu * (Hu + Hd) } \\\\[10pt]
+  \end{split}
+\quad\quad
+  \begin{split}
+    \beta_2 &= - \frac{ 2 }{ Hb * Hf } \\\\[10pt]
+    \beta_5 &= -\frac{ 2 }{ Hd * Hu } \\\\[10pt]
+    \gamma_2 &= - \frac{ Hb - Hf }{ Hb * Hf } \\\\[10pt]
+    \gamma_5 &= \frac{ Hu - Hd } { hd * Hu } \\\\[10pt]
+  \end{split}
+\quad\quad
+\begin{split}
+    \beta_3 &= \frac{ 2 }{ Hf * (Hb + Hf) } \\\\[10pt]
+    \beta_6 &= \frac{ 2 }{ dzd * (dzu + dzd) } \\\\[10pt]
+    \gamma_3 &= \frac{ Hb }{ Hf * (Hb + Hf) } \\\\[10pt]
+    \gamma_6 &= \frac{ Hu } {hd * (Hu + Hd) } \\\\[10pt]
+\end{split}
+\end{equation}
+$$
+
 ## One-Sided First-Order-Differences, First and Second Derivatives:
 
 $$
