@@ -48,12 +48,20 @@ $$
 Above, two forms are needed because we use each on both sides of a boundary. 
 
 $$
-\begin{align}
-&\omega_1 = \frac{-h_1}{h_2 ( h_1 + h_2 ) } \\  
-&\omega_2 = \frac{h_1 + h_2}{h_1 h_2 } \\  
-&\omega_3 = -\frac{2h_1 + h_2}{h_2 ( h_1 + h_2 ) } \\  
-&\omega_4 = \frac{h_1}{h_2 ( h_1 + h_2 ) } \\  
-&\omega_5 = -\frac{h_1 + h_2}{h_1 h_2  } \\  
-&\omega_6 = \frac{2h_1 + h_2}{h_2 ( h_1 + h_2 ) } \\  
-\end{align} 
+\begin{equation}
+  \begin{split}
+    &\omega_1 = \frac{-h_1}{h_2 ( h_1 + h_2 ) } \\\\[10pt]  
+    &\omega_4 = \frac{h_1}{h_2 ( h_1 + h_2 ) } \\\\[10pt]  
+  \end{split}
+\quad\quad
+  \begin{split}
+    &\omega_2 = \frac{h_1 + h_2}{h_1 h_2 } \\\\[10pt]  
+    &\omega_5 = -\frac{h_1 + h_2}{h_1 h_2  } \\\\[10pt]  
+  \end{split}
+\quad\quad
+\begin{split}
+    &\omega_3 = -\frac{2h_1 + h_2}{h_2 ( h_1 + h_2 ) } \\\\[10pt]  
+    &\omega_6 = \frac{2h_1 + h_2}{h_2 ( h_1 + h_2 ) } \\\\[10pt]  
+\end{split}
+\end{equation}
 $$
