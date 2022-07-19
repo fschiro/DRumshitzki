@@ -98,7 +98,7 @@ map_equations_to_matrix <- function(
     gridPoints %<>% split(., seq(nrow(.)))
     
     if(!is.null(ij)){
-        index <- gridPoints %>% lapply(function(x) gMapX_i_j(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
+        index <- gridPoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
         A[ index[index[, 1] > 0 & index[, 2] > 0, ] ] <- ij[ index[index[, 1] > 0 & index[, 2] > 0, 1] ]
     }
 
@@ -159,26 +159,26 @@ map_equations_to_b_vector <- function(B, rows_in_z, rows_in_r, ij = NULL, ip1j =
     gridPoints %<>% split(., seq(nrow(.)))
     
     if(!is.null(ij)){
-        index <- gridPoints %>% lapply(function(x) gMapX_i_j(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
+        index <- gridPoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
         B[ index[index[, 1] > 0 & index[, 2] < 0, 1]] <- ij[ index[index[, 1] > 0 & index[, 2] < 0, 1]]
     }
 
     if(!is.null(ip1j)){
-        index <- gridPoints %>% lapply(function(x) gMapX_iP1_j(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
+        index <- gridPoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = 1)) %>% do.call(rbind, .)
         B[ index[index[, 1] > 0 & index[, 2] < 0, 1] ] <- ip1j[ index[index[, 1] > 0 & index[, 2] < 0, 1]]
     }
 
     if(!is.null(im1j)){
-        index <- gridPoints %>% lapply(function(x) gMapX_iM1_j(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
+        index <- gridPoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_i = -1)) %>% do.call(rbind, .)
         B[ index[index[, 1] > 0 & index[, 2] < 0, 1]] <- im1j[ index[index[, 1] > 0 & index[, 2] < 0, 1]]
     }
     if(!is.null(ijp1)){
-        index <- gridPoints %>% lapply(function(x) gMapX_i_jP1(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
+        index <- gridPoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_j = 1)) %>% do.call(rbind, .)
         B[ index[index[, 1] > 0 & index[, 2] < 0, 1]] <- ijp1[ index[index[, 1] > 0 & index[, 2] < 0, 1]]
     }
 
     if(!is.null(ijm1)){
-        index <- gridPoints %>% lapply(function(x) gMapX_i_jM1(x[[1]], x[[2]], rows_in_z, rows_in_r)) %>% do.call(rbind, .)
+        index <- gridPoints %>% lapply(function(x) gMapX_ipmx_jpmx(x[[1]], x[[2]], rows_in_z, rows_in_r, add_j = -1)) %>% do.call(rbind, .)
         B[ index[index[, 2] < 0, 1]] <- ijm1[ index[index[, 2] < 0, 1]]
     }
 
