@@ -79,7 +79,7 @@ $$
 $$
 \begin{align}
 0 = & -K_{P_g} \frac{\partial P(r, z=EC1)}{\partial z} + K_{P_i} \frac{\partial P(r, z=EC2)}{\partial z} \\\\[10pt]
-0 = & -K_{P_g} \\, ( \\, \omega_4 \\, P(r, z - 2) +  \omega_5 \\, P(r, z - 1) + \omega_6 \\, P(r, z) \\, ) + K_{P_i} \\, ( \\, \omega_1 \\, P(r, z + 3) + \omega_2 \\, P(r, z + 2) + \omega_3 \\, P(r, z + 1) \\, )
+= & -K_{P_g} \\, ( \\, \omega_4 \\, P(r, z - 2) +  \omega_5 \\, P(r, z - 1) + \omega_6 \\, P(r, z) \\, ) + K_{P_i} \\, ( \\, \omega_1 \\, P(r, z + 3) + \omega_2 \\, P(r, z + 2) + \omega_3 \\, P(r, z + 1) \\, )
 \end{align}
 $$
 
