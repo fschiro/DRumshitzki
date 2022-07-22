@@ -1,4 +1,9 @@
-1. B-vector verify
-2. Albumim concentration for Endothelial Cells
-3. Plan inverse, adding concentration to EC, concentration matrix docs
-4. Rumschitzki two-sided difference scheme 
+1. Framework
+    a. Start file: Concentration vector initial = zeros
+    a. Start file: Pressure vector initial = zeros
+2. Create function: update albumim to pressure matrix  
+        i. input: pressure matrix, albumim vector
+        ii. output: Updated pressure matrix 
+3. Start file: Apply #2 & load and inverse pressure matrix
+4. Create: build_concentration_matrix.r
+6. Rumschitzki two-sided difference scheme 
