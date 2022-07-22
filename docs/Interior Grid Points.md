@@ -22,7 +22,7 @@ $$
 $$
 \begin{align}
 0 = & P(r - Hb, z) \times h^2 (\beta_1 + \frac{1}{r} \gamma_1) +  
-P(r, z) \times h^2 (\beta_2  + \frac{1}{r} \gamma_2 + \beta_5) + 
+P(r, z) \times [h^2 (\beta_2  + \frac{1}{r} \gamma_2 ) + \beta_5 ] + 
 P(r + Hf, z) \times h^2 (\beta_3 + \frac{1}{r} \gamma_3) + \\\\[10pt]
 & P(r, z - Hb) \beta_4 +
 P(r, z + Hf) \beta_6
