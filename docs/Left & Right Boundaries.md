@@ -36,7 +36,7 @@ Because these are not in the grid/matrix, in the matrix these elements are not u
 
 $$
 \begin{align}
-0 = & P(r, z) \times h^2 (\beta_2 + \beta_5) + 
+0 = & P(r, z) \times h^2 \beta_2 + \beta_5 + 
 P(r + Hf, z) \times h^2 \beta_3  + 
 P(r, z - Hb) \beta_4 +
 P(r, z + Hf) \beta_6
@@ -56,7 +56,7 @@ All points on boundary need $h^2 \beta_1$ added to boundary-vector.
 $$
 \begin{align}
 0 = & P(r - Hb, z) \times h^2 \beta_1 +
-P(r, z) \times h^2 (\beta_2 + \beta_5) +
+P(r, z) \times h^2 \beta_2 + \beta_5 +
 P(r, z - Hb) \beta_4 +
 P(r, z + Hf) \beta_6
 \end{align} 
