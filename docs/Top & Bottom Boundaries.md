@@ -5,6 +5,8 @@ Interior equation
 Pressure at the top of Glycocalx = 1
 Pressure at bottom of Media = 0
 
+Note: We don't need to modify the pressure matrix because no changes to the interior equation. We need to modify the boundary-vector for the top (GX) boundary. The bottom (Media) boundary-vector values do not need to be modified because the pressure is zero, the boundary-vector default value. 
+
 # Equations on The Grid Interior
 
 $$
@@ -43,9 +45,9 @@ P(r, z + Hf) \beta_6
 $$
 
 
-## Vector   
+### Vector   
 
-All points on boundary need $\beta_4$ added to boundary-vector.
+All points on boundary need $\beta_4$ added to boundary-vector. The pressure $= 1\rightarrow 1 \times \beta_4 = \beta_4$
 
 
 ## Final Form of Right boundary
@@ -62,6 +64,7 @@ P(r, z - Hb) \beta_4
 $$
 
 
-## Vector   
+### Vector   
 
-All points on boundary need $h^2 \beta_6$ added to boundary-vector.
+We don't need to modify the boundary. The value of pressure here is zero which is the default value of boundary-vector. 
+
