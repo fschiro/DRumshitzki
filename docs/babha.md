@@ -13,6 +13,6 @@
       </div>
 </div>
 ```
-3. Need more info from Yao: "When we selected the filter, let say Architect.  He want to Architect name display and list the record. Is that possible?"
-4. sources and reference filter - Complete on dev. [PUSH] -> [complete]
-5. satelite view = [complete]
+3. Total record counter div or Total Records | Total buildings when searching on buildings tab
+5. sources and reference filter - Complete on dev. [PUSH] -> [complete]
+6. satelite view = [complete]
