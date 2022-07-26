@@ -13,6 +13,6 @@
       </div>
 </div>
 ```
-2. Need more info from Yao: "When we selected the filter, let say Architect.  He want to Architect name display and list the record. Is that possible?"
-3. sources and reference filter - Complete on dev. [PUSH] -> [complete]
-4. satelite view = [complete]
+3. Need more info from Yao: "When we selected the filter, let say Architect.  He want to Architect name display and list the record. Is that possible?"
+4. sources and reference filter - Complete on dev. [PUSH] -> [complete]
+5. satelite view = [complete]
