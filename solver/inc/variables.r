@@ -21,13 +21,19 @@ rfstar <- 0.8 * 1e-6; # finestral pore radius
 Lgstar <- 200 * 1e-9; # Glycocalx region thickness
 Lmstar <- 141 * 1e-6; # Media region thickness
 Listar <- 200 * 1e-9; # Intima region thickness
+# Assuming above in mm I convert to meters
+rfstar <- rfstar * 1e-3
+Lgstar <- Lgstar * 1e-3
+Lmstar <- Lmstar * 1e-3
+Listar <- Listar * 1e-3
+
 rh = 15.0125; # Nondimensional length of r-domain including junction
 xci = 15.0; # Nondimensional radius of endothelial cell
 dR = 0.025; # Nondimensional width of normal junction
 
-# viscosity 
+# viscosity (I THINK THIS IS WRONG)
 
-mu = 7.2e-4; # viscosity of water
+mu = 7.2e-4; # viscosity of water  # The SI unit of kinematic viscosity is square meter per second (m2/s)
 
 # osmotic reflection coeffs
 
@@ -39,6 +45,12 @@ sigma_nj <- 0.17 # osmotic reflection coeff of NJ
 Lpm <- 5.6235 * 1e-12 # Hydraulic conductivity of media from Tieuvi
 Lp_nj <- 5.5 * 1e-9 # Hydraulic conductivity of normal junction from Tieuvi's 20mmHg data
 Lpe <- 6.3228 * 1e-12 # Intrinsic hydraluic conductivity of endothelium from 20 mmHg 
+# I multiplied by 10^-3 because maybe mm->m ? 
+Lpm <- Lpm * 1e-3
+Lp_nj <- Lp_nj * 1e-3
+Lpe <- Lpe * 1e-3
+
+
 per <- 0  # percentage of AQPs contributing to Lp_EC
 Lp_ec <-  per * Lpe / 100;
 
@@ -136,10 +148,12 @@ mediaGrid <- zmgrid_new(gamma);
 
 
 r <- rGridStuff$a
+# dev: remove r[0] from R-vector and consider this point to be boundary to avoid 1/0 = 0
+dr_backward = r[2:length(r)] - r[1:(length(r) - 1)]
+dr_forward = abs( r[2:(length(r) - 1)] - r[3:length(r)] )
+dr_forward %<>% c(., .[length(.)])
+r <- r[2:length(r)]
 r_inverse <- 1 / r
-dr = r[2:length(r)] - r[1:(length(r) - 1)]
-dr_forward <- c(dr, dr[length(dr)]) # adding extra point for distance to boundary
-dr_backward <- c(dr[1], dr) # adding extra point for distance to boundary
 
 rows_in_r <- length(r)
 
@@ -317,7 +331,17 @@ Kp %<>% c(.,
 # Zero matrix for overwriting 
 # ================================================== #
 zeros = rep(0, rows_in_r * rows_in_z)
+ones = rep(1, rows_in_r * rows_in_z)
 
 
+
+# ================================================== #
+# Run some tests & quit program if tests fail 
+# ================================================== #
+finiteTest(r_inverse, 'r_inverse')
+finiteTest(dr_forward, 'dr_forward')
+finiteTest(dr_backward, 'dr_backward')
+finiteTest(dzd, 'dzd')
+finiteTest(dzu, 'dzu')
 
 
