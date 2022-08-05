@@ -123,7 +123,6 @@ PRESSURE_BV %<>% map_equations_to_b_vector(
 )
 
 
-
 # ================================================== #
 # Top, bottom boundaries
 # ================================================== #
@@ -156,6 +155,10 @@ PRESSURE_BV %<>% map_equations_to_b_vector(
     gridPoints = gridPoints_top
 )
 
+
+if(any(!is.finite(PRESSURE_MAT@x))) {
+	"Interior or outer boundaries" %>% sprintf("ERROR: Non-finite values entered in pressure matrix @ %s", .) %>% stop()
+}
 
 
 
@@ -200,6 +203,9 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     ,gridPoints = media_top_gridPoints
 )
 
+if(any(!is.finite(PRESSURE_MAT@x))) {
+	"Intima-Media Finestra" %>% sprintf("ERROR: Non-finite values entered in pressure matrix @ %s", .) %>% stop()
+}
 
 
 # ================================================== #
@@ -250,6 +256,9 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
 )
 
 
+if(any(!is.finite(PRESSURE_MAT@x))) {
+	"Intima-Media Non-Finestra" %>% sprintf("ERROR: Non-finite values entered in pressure matrix @ %s", .) %>% stop()
+}
 
 
 # ================================================== #
@@ -265,7 +274,7 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     ij = omega_6,
     ip1j = zeros,
     im1j = omega_5 + xi_g_ec,
-    ip2j = -xi_g_ec,
+    ip2j = -xi_g_ec * ones,
     im2j = omega_4,
     ijp1 = NULL, # default value is zero and we have not edited this previously 
     ijm1 = NULL, # default value is zero and we have not edited this previously
@@ -280,7 +289,7 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     ip1j = omega_2 - xi_i_ec,
     im1j = NULL, # default value is zero and we have not edited this previously
     ip2j = omega_1,
-    im2j = xi_i_ec,
+    im2j = xi_i_ec * ones,
     ijp1 = NULL, # default value is zero and we have not edited this previously 
     ijm1 = NULL, # default value is zero and we have not edited this previously
     ijp2 = NULL, # default value is zero and we have not edited this previously
@@ -288,7 +297,9 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     gridPoints = ec2_gridPoints
 )
 
-
+if(any(!is.finite(PRESSURE_MAT@x))) {
+	"Endothelial Cell" %>% sprintf("ERROR: Non-finite values entered in pressure matrix @ %s", .) %>% stop()
+}
 
 # ================================================== #
 # Endothelial Cells - normal junction (space between EC)
@@ -341,6 +352,10 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     ,ijm2 = NULL # default value is zero and we have not edited this previously
     ,gridPoints = nj2_gridPoints
 )
+
+if(any(!is.finite(PRESSURE_MAT@x))) {
+	"Endothelial Cell - Normal Junction" %>% sprintf("ERROR: Non-finite values entered in pressure matrix @ %s", .) %>% stop()
+}
 
 # i = dz
 # j = dr 
