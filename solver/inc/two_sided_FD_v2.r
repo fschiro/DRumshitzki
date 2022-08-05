@@ -43,3 +43,21 @@ gamma_5 <- (dzu - dzd) / (dzu * dzd)
 gamma_6 <- dzu / ( dzd * (dzu + dzd) )
 
 
+# ================================================== #
+# Run some tests & quit program if tests fail 
+# ================================================== #
+
+finiteTest(betaAlt_1, 'betaAlt_1')
+finiteTest(betaAlt_2, 'betaAlt_2')
+finiteTest(betaAlt_3, 'betaAlt_3')
+finiteTest(beta_4, 'beta_4')
+finiteTest(beta_5, 'beta_5')
+finiteTest(beta_6, 'beta_6')
+finiteTest(gammaAlt_1, 'gammaAlt_1')
+finiteTest(gammaAlt_2, 'gammaAlt_2')
+finiteTest(gammaAlt_3, 'gammaAlt_3')
+finiteTest(gamma_4, 'gamma_4')
+finiteTest(gamma_5, 'gamma_5')
+finiteTest(gamma_6, 'gamma_6')
+
+
