@@ -1,9 +1,8 @@
 # ======================================================== #
 # Load dependencies
 # ======================================================== #
-
-library(magrittr)
-
+# libraries and helpfull R functions 
+source('inc/depend.r') 
 # get shripad grid functions
 file.path('inc', 'gridCreation', 'rGridMultipleNew.r') %>% source
 file.path('inc', 'gridCreation', 'zggrid.r') %>% source
@@ -37,8 +36,6 @@ PRESSURE_BV %<>% pressure_bv_albumim_updater(CONCENTRATION)
 # 1. Load PRESSURE_MATRIX and invert!
 # 2. Create framework for concentration matrix!
 # ======================================================== #
-
-
 
 
 
