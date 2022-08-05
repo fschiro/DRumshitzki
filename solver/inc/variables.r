@@ -185,11 +185,11 @@ dz_g2_backward <- c(rep(dz_g2[1], 2), dz_g2) # distance point 1 to boundary = di
 
 
 z_i <- intimaGrid$zi
-dz_i <- z_i[2:length(z_i)] - z_i[1:(length(z_i) - 1)]
+dz_i <- z_i[2:length(z_i)] - z_i[1:(length(z_i) - 1)]    # [(2-1), (3-2), ..., (N - N-1)]
 dz_i2 <- z_i[3:length(z_i)] - z_i[1:(length(z_i) - 2)]
-dz_i_forward <- c(dz_i, dz_i[length(dz_i)])
-dz_i_backward <- c(dz_i[1], dz_i) 
+dz_i_forward <- c(dz_i, dz_i[length(dz_i)])				# [(2-1), (3-2), ..., (N - N-1), (N - N-1)]
 dz_i2_forward <- c(dz_i2, rep(dz_i2[length(dz_i2)], 2))
+dz_i_backward <- c(dz_i[1], dz_i) 		# backward is forward shifted over by 1
 dz_i2_backward <- c(rep(dz_i2[1], 2), dz_i2) 
 
 
@@ -214,6 +214,43 @@ dz2d <- dz2_down %>% lapply(function(i) rep(i, rows_in_r)) %>% unlist
 rows_in_z <- (length(z_i) + length(z_g) + length(z_m) + 2) # 2 for endothelial cells
 
 
+
+# dimension of grid
+gridDimension <- rows_in_z * rows_in_r
+
+# =========================================== #
+# Endothelial cell gridpoints define 
+# Define here bc we use often
+# =========================================== #
+ec1_z <- length(z_g) + 1
+ec2_z <- ec1_z + 1
+
+ec1_gridPoints = expand.grid(ec1_z, seq(last_endo_cell)) 
+ec2_gridPoints = expand.grid(ec2_z, seq(last_endo_cell))
+
+first_nj_cell <- last_endo_cell + 1
+last_nj_cell <- rows_in_r
+
+nj1_gridPoints = expand.grid(ec1_z, seq(first_nj_cell, last_nj_cell)) 
+nj2_gridPoints = expand.grid(ec2_z, seq(first_nj_cell, last_nj_cell))
+
+index_ec1 <- ec1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r)	
+index_ec2 <- ec2_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r)	
+
+index_nj1 <- nj1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r)	
+index_nj2 <- nj2_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r)	
+
+index_intima_from_ec1 <- ec1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = 2)	
+index_intima_from_ec2 <- ec1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = 1)	
+
+index_gx_from_ec1 <- ec1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = -1)	
+index_gx_from_ec2 <- ec2_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = -2)
+
+index_intima_from_nj1 <- nj1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = 2)	
+index_intima_from_nj2 <- nj1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = 1)	
+
+index_gx_from_nj1 <- nj1_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = -1)	
+index_gx_from_nj2 <- nj2_gridPoints %>% gMapX_ipmx_jpmx(rows_in_z, rows_in_r, add_i = -2)
 
 # ======================================================== #
 #       H variables 
