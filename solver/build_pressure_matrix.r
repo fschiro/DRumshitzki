@@ -42,9 +42,8 @@
 # j = dr 
 
 
-dimA <- rows_in_z * rows_in_r
-PRESSURE <- Matrix(nrow = dimA, ncol = dimA, data = 0, sparse = TRUE)
-PRESSURE_BV <- Matrix(nrow = dimA, ncol = 1, data = 0, sparse = TRUE)
+PRESSURE_MAT <- Matrix(nrow = gridDimension, ncol = gridDimension, data = 0, sparse = TRUE)
+PRESSURE_BV <- Matrix(nrow = gridDimension, ncol = 1, data = 0, sparse = TRUE)
 
 
 
@@ -53,7 +52,7 @@ PRESSURE_BV <- Matrix(nrow = dimA, ncol = 1, data = 0, sparse = TRUE)
 # ================================================== #
 # h^2 * (D2(P, r) + 1/r * D(P, r) ) + D2(P, z) = 0
 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = betaAlt_2 + gammaAlt_2 + beta_5, 
     ip1j = beta_6, 
@@ -62,7 +61,6 @@ PRESSURE %<>% map_equations_to_matrix(
     ijm1 = betaAlt_1 + gammaAlt_1, 
     gridPoints = NULL # Null sets to all points on interior
 )
-
 
 
 # ================================================== #
@@ -85,7 +83,7 @@ gridPoints_left = expand.grid(seq(rows_in_z), 1)
 gridPoints_right = expand.grid(seq(rows_in_z), rows_in_r)
 
 # Right
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = betaAlt_2 + beta_5, 
     ip1j = NULL, # don't need - correctly applied previously in interior section & NULL does not overwrite
@@ -105,7 +103,7 @@ PRESSURE_BV %<>% map_equations_to_b_vector(
 )
 
 # Left
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = betaAlt_2 + beta_5, 
     ip1j = NULL, # don't need - correctly applied previously in interior section
@@ -172,7 +170,7 @@ PRESSURE_BV %<>% map_equations_to_b_vector(
 intima_bottom_gridPoints <- expand.grid(136, seq(last_finestra_cell))
 media_top_gridPoints <- expand.grid(137, seq(last_finestra_cell)) 
 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = Kpi * omega_6 + Kpm * omega_3 + Kpm * omega_2
     ,im1j = Kpi * omega_5
@@ -187,7 +185,7 @@ PRESSURE %<>% map_equations_to_matrix(
     ,gridPoints = intima_bottom_gridPoints
 )
 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = Kpi * omega_5 + Kpi * omega_6 + Kpm * omega_3
     ,im1j = NULL # default value is zero and we have not edited this previously
@@ -221,7 +219,7 @@ not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r)
 
 
 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_6
     ,im1j = omega_5
@@ -236,7 +234,7 @@ PRESSURE %<>% map_equations_to_matrix(
     ,gridPoints = not_finestra_intima_bottom_gridPoints
 )
 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_3
     ,im1j = NULL # default value is zero and we have not edited this previously
@@ -262,10 +260,7 @@ PRESSURE %<>% map_equations_to_matrix(
 #			All elements in grid
 # ================================================== #
 
-ec_top_gridPoints = expand.grid(50, seq(last_endo_cell)) 
-ec_bottom_gridPoints = expand.grid(51, seq(last_endo_cell))
-
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = omega_6,
     ip1j = zeros,
@@ -276,10 +271,10 @@ PRESSURE %<>% map_equations_to_matrix(
     ijm1 = NULL, # default value is zero and we have not edited this previously
     ijp2 = NULL, # default value is zero and we have not edited this previously
     ijm2 = NULL, # default value is zero and we have not edited this previously
-    gridPoints = ec_top_gridPoints
+    gridPoints = ec1_gridPoints
 )
 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = omega_3,
     ip1j = omega_2 - xi_i_ec,
@@ -290,7 +285,7 @@ PRESSURE %<>% map_equations_to_matrix(
     ijm1 = NULL, # default value is zero and we have not edited this previously
     ijp2 = NULL, # default value is zero and we have not edited this previously
     ijm2 = NULL, # default value is zero and we have not edited this previously
-    gridPoints = ec_bottom_gridPoints
+    gridPoints = ec2_gridPoints
 )
 
 
@@ -306,15 +301,12 @@ PRESSURE %<>% map_equations_to_matrix(
 # rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
 # rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
 # ================================================== #
-first_nj_cell <- last_endo_cell + 1
-last_nj_cell <- rows_in_r
-nj_top_gridPoints = expand.grid(50, seq(first_nj_cell, last_nj_cell)) 
-nj_bottom_gridPoints = expand.grid(51, seq(first_nj_cell, last_nj_cell)) 
+
 
 # eq2. Kp_gx * [P(r, z) - P(r, zg)] / dz - Kp_intima * [P(r, zi) - P(r, z)] / dz = 0
 # eq2 @ part 1 --> (Kp_gx - kp_intima) / dz * P(r, z) - (Kp_gx * P(r, zg)) / dz : P(r, zg) = value @ im1j
 # eq2 @ part 2 --> - (Kp_intima * P(r, zi)) / dz
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ,ij = -Kpg * omega_6
     ,im1j = -Kpg * omega_5
@@ -326,7 +318,7 @@ PRESSURE %<>% map_equations_to_matrix(
     ,ijm2 = NULL # default value is zero and we have not edited this previously
     ,ijp1 = NULL # default value is zero and we have not edited this previously
     ,ijp2 = NULL # default value is zero and we have not edited this previously
-    ,gridPoints = nj_top_gridPoints
+    ,gridPoints = nj1_gridPoints
 )
 
 
@@ -334,7 +326,7 @@ PRESSURE %<>% map_equations_to_matrix(
 # eq2. Kp_gx * [P(r, z) - P(r, zg)] / dz - Kp_intima * [P(r, zi) - P(r, z)] / dz = 0
 # eq1 + eq2 @ part 1 --> D(P, z)_nj2 + (Kp_gx - kp_intima) / dz * P(r, z) + - P(r, zi) * a_i - (Kp_intima * P(r, zi)) / dz
 # eq1 + eq2 @ part 2 --> a_i * P(r, zg) - (Kp_gx * P(r, zg)) / dz 
-PRESSURE %<>% map_equations_to_matrix(
+PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = Kpi * omega_3 - omega_3
     ,ip1j = Kpi * omega_2 - omega_2
@@ -347,7 +339,7 @@ PRESSURE %<>% map_equations_to_matrix(
     ,ijm1 = NULL # default value is zero and we have not edited this previously
     ,ijp2 = NULL # default value is zero and we have not edited this previously
     ,ijm2 = NULL # default value is zero and we have not edited this previously
-    ,gridPoints = nj_bottom_gridPoints
+    ,gridPoints = nj2_gridPoints
 )
 
 # i = dz
