@@ -32,10 +32,15 @@ file.path('build_pressure_matrix.r') %>% source
 PRESSURE_BV %<>% pressure_bv_albumim_updater(CONCENTRATION)
 
 # ======================================================== #
+# Active dev below:
 # Todo:
-# 1. Load PRESSURE_MATRIX and invert!
-# 2. Create framework for concentration matrix!
+#    1. Create framework for concentration matrix
+#    2. Build concentration matrix
+#    3. Fix variable units (mm vs m, mm^2 vs m^2) 
+#		Use function to convert, put function in depend.r
+#    4. Rumschitzki two-sided difference scheme
 # ======================================================== #
+
 
 
 
@@ -46,14 +51,18 @@ PRESSURE_BV %<>% pressure_bv_albumim_updater(CONCENTRATION)
 # Ax = B 
 # QRx = B
 # Rx = Q^T B
-# solve with back substitution
+# R is upper triangular -> solve with back substitution 
 # ======================================================== #
 #https://www.r-bloggers.com/2015/07/dont-invert-that-matrix-why-and-how/
 # QR decomposition is included in base R. You use the function qr once to create a decomposition, then use qr.coef to solve for x repeatedly using new b’s.
-qr_decomp = qr(PRESSURE_MAT, LAPACK = TRUE)
-xhat_qr = qr.coef(qr_decomp, PRESSURE_BV)
+qr_decomp <- qr(PRESSURE_MAT, LAPACK = TRUE)
+PRESSURE <- qr.coef(qr_decomp, PRESSURE_BV)
 
+# ======================================================== #
+# Build concentration matrix (About 10 seconds on slow computer)
+# ======================================================== #
 
+file.path('build_concentration_matrix.r') %>% source
 
 
 # ======================================================== #
@@ -66,30 +75,3 @@ print(image(PRESSURE_MAT, main = "image(PRESSURE_MAT)"))
 dev.off()
 # -------------------------------- end
 
-
-PRESSURE_MAT_INV <- solve(PRESSURE_MAT)
-test <- solve(PRESSURE_MAT, PRESSURE_BV) 
-test <- solve(PRESSURE_MAT, PRESSURE_BV, sparse = TRUE)
-# out of memory
-# Error in .solve.dgC(a, as(b, "denseMatrix"), tol = tol, sparse = sparse) : cs_lu(A) failed: near-singular A (or out of memory)
-https://www.r-bloggers.com/2015/07/dont-invert-that-matrix-why-and-how/
-https://cran.r-project.org/web/packages/sparseinv/sparseinv.pdf
-https://cran.r-project.org/web/packages/Matrix/Matrix.pdf
-https://cran.r-project.org/web/packages/Matrix/vignettes/Intro2Matrix.pdf
-"Also there is no direct support for sparse matrices in R although Koenker and Ng (2003) have developed
-the SparseM package for sparse matrices based on SparseKit."
-
-PRESSURE_MAT 
-173925 x 173925 sparse Matrix of class "dgCMatrix"
-# note it is already sparse
-#print(image(PRESSURE_MAT, main = "image(PRESSURE_MAT)"))
-
-
-ddenseMatrix
-dgCMatrix
-dgeMatrix
-dpoMatrix
-dsCMatrix
-dspMatrix
-dtCMatrix
-dsyMatrix
