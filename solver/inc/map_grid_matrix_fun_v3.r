@@ -1,6 +1,12 @@
 library(magrittr)
 library(Matrix)
 
+
+xMapG <- function(stateVector, gridRows = 3, gridCols = 4){
+# map a state vector to a matrix of values for each grid-point
+	stateVector %>% Matrix(nrow = gridRows, ncol = gridCols, byrow = TRUE)
+}
+
 gMapX <- function(gridPoints, gridRows = 3, gridCols = 4){
     # i = row of physical grid
     # j = column of physical grid
