@@ -3,49 +3,20 @@
 # ======================================================== #
 
 # Apply equations to pressure matrix and pressure boundary-vector in grid space 
-
-# Grid space in r:
-#   Endothelial Cell region:
-#      EC r in [0, R]
-#      Normal-Junction r in (R, end]
-#      R = 737
-#          rGridStuff$pec = 737 -> R = 737
-#      end = 773
-
-#   Non-endothelial cell region:
-#      Finestra r in [0, 1]
-#      Non-Finestra r in (1, end]
-#      finestra r in [0, 89]
-#          rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
-
-# Grid space in z:
-#   Glycocalyx: z in [0, 49]
-#   EC: z in [50, 51] 
-#       length(z_g) = 49 -> 50 + 51 are endothelial cells
-#   Intima:
-#   Media: 
+# See docs for more information, equations, and more in-depth comments
+# Docs: https://github.com/fschiro/DRumshitzki/tree/main/docs
 
 # grid-space = (i, j) = (rows, columns) = (r, z)
-#	 i, j = [row, column] of grid space -> dr = dj, dz = di
-# Matrix-space conversion = handled automatically
-#   These functions return -1 when out point out-of-grid
-#   All points in grid are not boundary (they may be adjacent to boundary)
-
-
+# 	i, j = [row, column] of grid space
+# 	i = dz
+# 	j = dr 
 
 # ======================================================== #
-# Framework
+# Create initial sparse-matrices
 # ======================================================== #
-# Write a little about how this works on github and paste source link here
-
-# i = dz
-# j = dr 
-
 
 PRESSURE_MAT <- Matrix(nrow = gridDimension, ncol = gridDimension, data = 0, sparse = TRUE)
 PRESSURE_BV <- Matrix(nrow = gridDimension, ncol = 1, data = 0, sparse = TRUE)
-
-
 
 # ================================================== #
 # Main equations over all points
@@ -62,7 +33,6 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     gridPoints = NULL # Null sets to all points on interior
 )
 
-
 # ================================================== #
 # Left + right boundaries
 # ================================================== #
@@ -77,7 +47,6 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
 # 		Overwrite ijm1 @ left gridpoints because D(P, r) = 0
 # 		Overwrite ijp1 @ right gridpoints because D(P, r) = 0
 # ================================================== #
-
 
 gridPoints_left = expand.grid(seq(rows_in_z), 1)
 gridPoints_right = expand.grid(seq(rows_in_z), rows_in_r)
@@ -122,7 +91,6 @@ PRESSURE_BV %<>% map_equations_to_b_vector(
     gridPoints = gridPoints_right
 )
 
-
 # ================================================== #
 # Top, bottom boundaries
 # ================================================== #
@@ -155,13 +123,11 @@ PRESSURE_BV %<>% map_equations_to_b_vector(
     gridPoints = gridPoints_top
 )
 
+# bottom not needed
 
 if(any(!is.finite(PRESSURE_MAT@x))) {
 	"Interior or outer boundaries" %>% sprintf("ERROR: Non-finite values entered in pressure matrix @ %s", .) %>% stop()
 }
-
-
-
 
 # ================================================== #
 # Intima-Media boundary - Finestra hole
@@ -215,8 +181,6 @@ if(any(!is.finite(PRESSURE_MAT@x))) {
 # Question: Why no boundary vector changes?
 # 	Answer: No components in r-direction on EC
 #			All elements in grid
-# rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
-# rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
 # ================================================== #
 
 non_finestra_sequence_r = seq(first_non_finestra_cell, last_non_finestra_cell)
@@ -308,15 +272,8 @@ if(any(!is.finite(PRESSURE_MAT@x))) {
 # Question: Why no boundary vector changes?
 # 	Answer: No components in r-direction on EC
 #			All elements in grid
-# ------- Notes -------- #
-# rGridStuff$a = 1 at point 89 thus finestra is first 89 points of 773
-# rGridStuff$pec = 737 -> R = 737 -> first 737 / 773 points are on EC
 # ================================================== #
 
-
-# eq2. Kp_gx * [P(r, z) - P(r, zg)] / dz - Kp_intima * [P(r, zi) - P(r, z)] / dz = 0
-# eq2 @ part 1 --> (Kp_gx - kp_intima) / dz * P(r, z) - (Kp_gx * P(r, zg)) / dz : P(r, zg) = value @ im1j
-# eq2 @ part 2 --> - (Kp_intima * P(r, zi)) / dz
 PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ,ij = -Kpg * omega_6
@@ -332,11 +289,6 @@ PRESSURE_MAT %<>% map_equations_to_matrix(
     ,gridPoints = nj1_gridPoints
 )
 
-
-# eq1. D(P, z)_nj2 + a_i * [P(r, zg) - P(r, zi) - S_nj * (PI(r, zg) - PI(r, zi))] = 0
-# eq2. Kp_gx * [P(r, z) - P(r, zg)] / dz - Kp_intima * [P(r, zi) - P(r, z)] / dz = 0
-# eq1 + eq2 @ part 1 --> D(P, z)_nj2 + (Kp_gx - kp_intima) / dz * P(r, z) + - P(r, zi) * a_i - (Kp_intima * P(r, zi)) / dz
-# eq1 + eq2 @ part 2 --> a_i * P(r, zg) - (Kp_gx * P(r, zg)) / dz 
 PRESSURE_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = Kpi * omega_3 - omega_3
