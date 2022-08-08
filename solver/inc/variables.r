@@ -1,6 +1,7 @@
 # ============================================================== #
 # Variable assignments
 # ============================================================== #
+common_length <- 'cm' # for converting all units to common length scale
 
 # r-grid spacing variables
 
@@ -16,16 +17,16 @@ beta = 1.6;
 gamma = 10.0;
 
 # domain dimensions
+rfstar <- 0.8 * 1e-6; # uM ## finestral pore radius 
+Lgstar <- 200 * 1e-9; # nM ## Glycocalx region thickness
+Lmstar <- 141 * 1e-6; # uM ## Media region thickness
+Listar <- 200 * 1e-9; # nM ## Intima region thickness
+rfstar %<>% conv_unit(from = 'um', to = common_length)
+Lgstar %<>% conv_unit(from = 'nm', to = common_length)
+Lmstar %<>% conv_unit(from = 'um', to = common_length)
+Listar %<>% conv_unit(from = 'nm', to = common_length)
 
-rfstar <- 0.8 * 1e-6; # finestral pore radius
-Lgstar <- 200 * 1e-9; # Glycocalx region thickness
-Lmstar <- 141 * 1e-6; # Media region thickness
-Listar <- 200 * 1e-9; # Intima region thickness
-# Assuming above in mm I convert to meters
-rfstar <- rfstar * 1e-3
-Lgstar <- Lgstar * 1e-3
-Lmstar <- Lmstar * 1e-3
-Listar <- Listar * 1e-3
+
 
 rh = 15.0125; # Nondimensional length of r-domain including junction
 xci = 15.0; # Nondimensional radius of endothelial cell
@@ -33,7 +34,8 @@ dR = 0.025; # Nondimensional width of normal junction
 
 # viscosity (I THINK THIS IS WRONG)
 
-mu = 7.2e-4; # viscosity of water  # The SI unit of kinematic viscosity is square meter per second (m2/s)
+mu = 7.2e-4; # kg/m-s [Table1] ## viscosity of water 
+mu <- mu * conv_unit(1, common_length, 'm') # kg/m-s -> kg / cm-s (multiplying because 1/m * m/cm = 1/cm)
 
 # osmotic reflection coeffs
 
@@ -45,6 +47,7 @@ sigma_nj <- 0.17 # osmotic reflection coeff of NJ
 Lpm <- 5.6235 * 1e-12 # Hydraulic conductivity of media from Tieuvi
 Lp_nj <- 5.5 * 1e-9 # Hydraulic conductivity of normal junction from Tieuvi's 20mmHg data
 Lpe <- 6.3228 * 1e-12 # Intrinsic hydraluic conductivity of endothelium from 20 mmHg 
+
 # I multiplied by 10^-3 because maybe mm->m ? 
 Lpm <- Lpm * 1e-3
 Lp_nj <- Lp_nj * 1e-3
@@ -52,7 +55,13 @@ Lpe <- Lpe * 1e-3
 
 
 per <- 0  # percentage of AQPs contributing to Lp_EC
-Lp_ec <-  per * Lpe / 100;
+Lp_ec <-  per * Lpe / 100; #[Shripad code]
+
+
+Lp_nj <- 6.09 * 1e-5 # cm/sec mmHg [Table1] ## Hydraulic conductivity of normal junction from Tieuvi's 20mmHg data
+Lp_ec <- 3.38 * 1e-8 # cm/sec mmHg [Table1]
+Lp_nj %<>% conv_unit(from = 'cm', to = common_length)
+Lp_ec %<>% conv_unit(from = 'cm', to = common_length)
 
 # Darcy permeability
 
@@ -72,11 +81,23 @@ h_g <- Lgstar / rfstar # Ratio - region-thickness / finestral pore readius
 h_ec <- 0 # really just a placeholder for this ratio at the endothelial cell 
 
 
-# for endothelial make these correct 
-a_gx = 1
-a_intima = 1
-kp_gx = 1
-kp_intima = 1
+
+fi <- 0.99
+fg <- 0.99
+fm <- 0.3
+
+# diffusivity of albumim in region j
+dg <- 2.75* 1e-7 # cm^2 / s 
+di <- 3.76* 1e-7 # cm^2 / s
+dm <- 1.296* 1e-8 # cm^2 / s
+dg %<>% conv_unit(from = 'cm2', to = paste0(common_length, '2'))
+di %<>% conv_unit(from = 'cm2', to = paste0(common_length, '2'))
+dm %<>% conv_unit(from = 'cm2', to = paste0(common_length, '2'))
+
+# volume fraction of albumim per unit total volume region j
+gg <- 0.94
+gi <- 0.94
+gm <- 0.08
 
 # ============================================================== #
 # Creating helpful math variables used in matrix creation
