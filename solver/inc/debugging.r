@@ -1,7 +1,7 @@
 
 
 # =============================================== #
-# Problem 1: non-finite values in matrix
+# Problem 1 (solved): non-finite values in matrix (solved)
 # =============================================== #
 1. Why Inf = (1, 2) ?
 	Answer: Because gammaAlt_3[1] = Inf
@@ -26,7 +26,7 @@ To solve:
 This problem was solved	by removing first point of r vector (r = 0) and treating that as boundary. 
 
 # =============================================== #
-# Problem 2: after fixing problem 1, 
+# Problem 2 (solved): after fixing problem 1, (solved)
 #	check entire matrix for non-finite values 
 # =============================================== #
 
@@ -42,6 +42,21 @@ subset(summary(PRESSURE_MAT), !is.finite(x))
 
 The problem was solved by creating a matrix of ones and multiplying constants by 1 before applying to grid
 
+
+# =============================================== #
+# Problem 3 (solved): solve Ax=B with QR Decomp
+# =============================================== #
+
+A <- Matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
+B <- c(6, 7, 8)
+qrd <- qr(A, LAPACK = TRUE)
+x = qr.coef(qrd, B)
+A %*% x
+3 x 1 Matrix of class "dgeMatrix"
+     [,1]
+[1,]    6
+[2,]    7
+[3,]    8
 
 
 
