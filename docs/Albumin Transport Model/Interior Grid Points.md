@@ -79,11 +79,11 @@ $$
 
 $$
 \begin{align}
-0 = & C(r-1) ( \iota U h^2 \gamma_1 - h^2 \beta_1 - \frac{h^2}{r} \gamma_1 )  \\\\[10pt]  
+0 = & C(r-1, z) ( \iota U h^2 \gamma_1 - h^2 \beta_1 - \frac{h^2}{r} \gamma_1 )  \\\\[10pt]  
 & C(r, z) ( \iota U h^2 \gamma_2 + \iota W \gamma_5 - h^2 \beta_2 - \frac{h^2}{r} \gamma_2 - \beta_5 )  \\\\[10pt]  
-& C(r + 1) ( \iota U h^2 \gamma_3 - h^2 \beta_3 - \frac{h^2}{r} \gamma_3 )  \\\\[10pt]  
-& C(z - 1) ( \iota W \gamma_4 - \beta_4 )  \\\\[10pt]  
-& C(z + 1) ( \iota W \gamma_6 - \beta_6)
+& C(r + 1, z) ( \iota U h^2 \gamma_3 - h^2 \beta_3 - \frac{h^2}{r} \gamma_3 )  \\\\[10pt]  
+& C(r, z - 1) ( \iota W \gamma_4 - \beta_4 )  \\\\[10pt]  
+& C(r, z + 1) ( \iota W \gamma_6 - \beta_6)
 \end{align} 
 $$
 
