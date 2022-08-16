@@ -17,6 +17,8 @@ Note: In Shripad 2020, $D_j^{\ast} = D_j$. Glossary states $D_j$ is the effectiv
 
 ## Equation Transformation  
 
+Where, below, $U_j$ and $W_j$ are the dimensionless velocity in $r, j$ respectivly.   
+
 $$
 \begin{align}
 &P_{erj} = \frac{f_j U_j^{\ast} r_f^{\ast}}{\gamma_j D_j^{\ast}} \\\\[10pt]
@@ -51,7 +53,6 @@ P_{ezj} = & W_j \times \iota   \\\\[10pt]
 \end{align}
 $$ 
 
-Where, above, $U_j$ and $W_j$ are the dimensionless velocity in $r, j$ respectivly. 
 
 Plugging $\iota$ into the interior equation:  
 
