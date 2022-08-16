@@ -6,12 +6,14 @@ $$
 ( \frac{\partial^2 C_j}{\partial r^2} + \frac{1}{r} \frac{\partial C_j}{\partial r}) + \frac{\partial^2 C_j}{\partial z_j^2} \\\\[10pt]
 & P_{erj} = \frac{f_j U_j^{\ast} r_f^{\ast}}{\gamma_j D_j^{\ast}} \\\\[10pt]
 & P_{ezj} = \frac{f_j W_j^{\ast} L_j^{\ast}}{\gamma_j D_j^{\ast}} \\\\[10pt]
-& h_j, f_j, \gamma_j, D_j, r_f^{\ast}, L_j^{\ast} \text{ are region-specific constants} \\\\[10pt]
+& h_j, f_j, \gamma_j, D_j^{\ast}, r_f^{\ast}, L_j^{\ast} \text{ are region-specific constants} \\\\[10pt]
 & U^{\ast}, W^{\ast} \text{ are velocities in r and z directions } \\\\[10pt]
 & r_f^{\ast}, L_j^{\ast} \text{ are region thickness and finestral pore radii } \\\\[10pt]
 & h_j = \frac{L_j^{\ast}}{r_f^{\ast}} \\\\[10pt]
 \end{align}
 $$
+  
+Note: In Shripad 2020, $D_j^{\ast} = D_j$. Glossary states $D_j$ is the effective diffusivity of albumim in region j. First paragraph of section 2.3 also states  $D_j^{\ast}$ is the effective diffusivity of albumim in region j
 
 ## Equation Transformation  
 
