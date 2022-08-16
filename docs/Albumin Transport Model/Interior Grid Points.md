@@ -87,3 +87,4 @@ $$
 \end{align} 
 $$
 
+Above, $U, W$ represent $U(r, z)$ and $W(r, z)$
