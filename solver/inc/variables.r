@@ -16,6 +16,9 @@ delta = 2.0;
 beta = 1.6;
 gamma = 10.0;
 
+# Pressure Lumin I believe is related to Listar
+PL_star <- 40 # mmHg [Fig 3. Shripad] ## Lumin Pressure ### estimate 40 from fig 3. because Listar in Shripad code was 200nm and I believe they are related 
+PL_star %<>% conv_unit(from = 'mm', to = common_length)
 # domain dimensions
 rfstar <- 0.8 * 1e-6; # uM ## finestral pore radius 
 Lgstar <- 200 * 1e-9; # nM ## Glycocalx region thickness
@@ -26,6 +29,10 @@ Lgstar %<>% conv_unit(from = 'nm', to = common_length)
 Lmstar %<>% conv_unit(from = 'um', to = common_length)
 Listar %<>% conv_unit(from = 'nm', to = common_length)
 
+# volume fraction of albumim per unit total volume of region j
+gam_g <- .94 # table 1 Shripad
+gam_i <- .94 # table 1 Shripad
+gam_m <- .08 # table 1 Shripad
 
 
 rh = 15.0125; # Nondimensional length of r-domain including junction
@@ -87,9 +94,10 @@ fg <- 0.99
 fm <- 0.3
 
 # diffusivity of albumim in region j
-dg <- 2.75* 1e-7 # cm^2 / s 
-di <- 3.76* 1e-7 # cm^2 / s
-dm <- 1.296* 1e-8 # cm^2 / s
+# I believe Dj = Dj*. In Glossery Dj = effective diffusivity of albumim in region j & in 2.3 first paragraph: "Dj* [is region j's] effective diffusivity"
+dg <- 2.75* 1e-7 # cm^2 / s (Source: Shripad Table1)
+di <- 3.76* 1e-7 # cm^2 / s (Source: Shripad Table1)
+dm <- 1.296* 1e-8 # cm^2 / s (Source: Shripad Table1)
 dg %<>% conv_unit(from = 'cm2', to = paste0(common_length, '2'))
 di %<>% conv_unit(from = 'cm2', to = paste0(common_length, '2'))
 dm %<>% conv_unit(from = 'cm2', to = paste0(common_length, '2'))
@@ -355,6 +363,37 @@ zeros = rep(0, rows_in_r * rows_in_z)
 ones = rep(1, rows_in_r * rows_in_z)
 
 
+# ================================================== #
+# iota_coef for concentration matrix 
+# Source: https://github.com/fschiro/DRumshitzki/blob/main/docs/Albumin%20Transport%20Model/Interior%20Grid%20Points.md
+# ================================================== #
+# iota_coef = (fj x Pl* x Kpj) / ( gam_j x Dj* x Mu) 
+iota_coef = rep(
+        rep(
+			( fg * Kpg ) / (gam_g * dg), 
+			rows_in_r
+		), length(z_g)
+    )
+iota_coef %<>% c(., rep(0, 2 * rows_in_r) ) # ec not needed
+iota_coef %<>% c(., 
+    rep(
+        rep(
+			( fi * Kpi ) / (gam_i * di), 
+			rows_in_r
+		), length(z_i)
+    )
+)
+iota_coef %<>% c(., 
+    rep(
+        rep(
+			( fm * Kpg ) / (gam_m * dm), 
+			rows_in_r
+		), length(z_m)
+    )
+)
+iota_coef <- (PL_star / mu) * iota_coef
+
+
 
 # ================================================== #
 # Run some tests & quit program if tests fail 
@@ -364,5 +403,7 @@ finiteTest(dr_forward, 'dr_forward')
 finiteTest(dr_backward, 'dr_backward')
 finiteTest(dzd, 'dzd')
 finiteTest(dzu, 'dzu')
+finiteTest(dzu, 'iota_coef')
+
 
 
