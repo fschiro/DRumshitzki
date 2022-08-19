@@ -1,21 +1,21 @@
 # ======================================================== #
 # Overview: 
 # Create matrix which, when multiplied by PRESSURE state vector, 
-#	produces dpdz at every gridpoint
+#	produces DFDZ at every gridpoint
 # ======================================================== #
 
 
 # ======================================================== #
 # Create initial sparse-matrices
 # ======================================================== #
-DPDZ <- Matrix(nrow = gridDimension, ncol = gridDimension, data = 0, sparse = TRUE)
+DFDZ <- Matrix(nrow = gridDimension, ncol = gridDimension, data = 0, sparse = TRUE)
 
 # ================================================== #
 # Main equations over all points
 # ================================================== #
 # h^2 * (D2(P, r) + 1/r * D(P, r) ) + D2(P, z) = 0
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = gamma_5, 
     ip1j = gamma_6, 
@@ -35,7 +35,7 @@ gridPoints_top = expand.grid(1, seq(rows_in_r))
 gridPoints_bot = expand.grid(rows_in_z, seq(rows_in_r))
 
 # top
-DPDZ %<>% map_equations_to_b_vector(
+DFDZ %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r,
     ij = omega_2, 
     ip1j = omega_3, 
@@ -43,7 +43,7 @@ DPDZ %<>% map_equations_to_b_vector(
     gridPoints = gridPoints_top
 )
 
-DPDZ %<>% map_equations_to_b_vector(
+DFDZ %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r,
     ij = omega_5, 
     ip1j = omega_6, 
@@ -53,8 +53,8 @@ DPDZ %<>% map_equations_to_b_vector(
 
 # bottom not needed
 
-if(any(!is.finite(DPDZ@x))) {
-	"Interior or outer boundaries" %>% sprintf("ERROR: Non-finite values entered in DPDZ matrix @ %s", .) %>% stop()
+if(any(!is.finite(DFDZ@x))) {
+	"Interior or outer boundaries" %>% sprintf("ERROR: Non-finite values entered in DFDZ matrix @ %s", .) %>% stop()
 }
 
 # ================================================== #
@@ -67,7 +67,7 @@ if(any(!is.finite(DPDZ@x))) {
 intima_bottom_gridPoints <- expand.grid(136, seq(last_finestra_cell))
 media_top_gridPoints <- expand.grid(137, seq(last_finestra_cell)) 
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = omega_5
     ,im1j = omega_4
@@ -75,7 +75,7 @@ DPDZ %<>% map_equations_to_matrix(
     ,gridPoints = intima_bottom_gridPoints
 )
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_2
     ,im1j = omega_1
@@ -83,8 +83,8 @@ DPDZ %<>% map_equations_to_matrix(
     ,gridPoints = media_top_gridPoints
 )
 
-if(any(!is.finite(DPDZ@x))) {
-	"Intima-Media Finestra" %>% sprintf("ERROR: Non-finite values entered in DPDZ matrix @ %s", .) %>% stop()
+if(any(!is.finite(DFDZ@x))) {
+	"Intima-Media Finestra" %>% sprintf("ERROR: Non-finite values entered in DFDZ matrix @ %s", .) %>% stop()
 }
 
 
@@ -102,7 +102,7 @@ not_finestra_intima_bottom_gridPoints = expand.grid(136, non_finestra_sequence_r
 not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r) 
 
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = omega_5
     ,im1j = omega_4
@@ -110,7 +110,7 @@ DPDZ %<>% map_equations_to_matrix(
     ,gridPoints = not_finestra_intima_bottom_gridPoints
 )
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_2
     ,im1j = omega_1
@@ -119,8 +119,8 @@ DPDZ %<>% map_equations_to_matrix(
 )
 
 
-if(any(!is.finite(DPDZ@x))) {
-	"Intima-Media Non-Finestra" %>% sprintf("ERROR: Non-finite values entered in DPDZ matrix @ %s", .) %>% stop()
+if(any(!is.finite(DFDZ@x))) {
+	"Intima-Media Non-Finestra" %>% sprintf("ERROR: Non-finite values entered in DFDZ matrix @ %s", .) %>% stop()
 }
 
 
@@ -132,7 +132,7 @@ if(any(!is.finite(DPDZ@x))) {
 #			All elements in grid
 # ================================================== #
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = omega_5
     ,im1j = omega_4
@@ -140,7 +140,7 @@ DPDZ %<>% map_equations_to_matrix(
     ,gridPoints = ec1_gridPoints
 )
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_2
     ,im1j = omega_1
@@ -149,8 +149,8 @@ DPDZ %<>% map_equations_to_matrix(
 )
 
 
-if(any(!is.finite(DPDZ@x))) {
-	"Endothelial Cell" %>% sprintf("ERROR: Non-finite values entered in DPDZ matrix @ %s", .) %>% stop()
+if(any(!is.finite(DFDZ@x))) {
+	"Endothelial Cell" %>% sprintf("ERROR: Non-finite values entered in DFDZ matrix @ %s", .) %>% stop()
 }
 
 # ================================================== #
@@ -161,7 +161,7 @@ if(any(!is.finite(DPDZ@x))) {
 # 	Answer: No components in r-direction on EC
 #			All elements in grid
 # ================================================== #
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r, 
     ij = omega_5
     ,im1j = omega_4
@@ -169,7 +169,7 @@ DPDZ %<>% map_equations_to_matrix(
     ,gridPoints = nj1_gridPoints
 )
 
-DPDZ %<>% map_equations_to_matrix(
+DFDZ %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_2
     ,im1j = omega_1
@@ -177,8 +177,8 @@ DPDZ %<>% map_equations_to_matrix(
     ,gridPoints = nj2_gridPoints
 )
 
-if(any(!is.finite(DPDZ@x))) {
-	"Endothelial Cell - Normal Junction" %>% sprintf("ERROR: Non-finite values entered in DPDZ matrix @ %s", .) %>% stop()
+if(any(!is.finite(DFDZ@x))) {
+	"Endothelial Cell - Normal Junction" %>% sprintf("ERROR: Non-finite values entered in DFDZ matrix @ %s", .) %>% stop()
 }
 
 # i = dz
