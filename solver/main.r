@@ -14,6 +14,8 @@ file.path('inc', 'map_grid_matrix_fun_v3.r') %>% source
 file.path('inc', 'variables.r') %>% source
 file.path('inc', 'one_sided_FD.r') %>% source
 file.path('inc', 'two_sided_FD_v2.r') %>% source
+file.path('inc', 'dfdr.r') %>% source
+file.path('inc', 'dfdz.r') %>% source
 # Other functions
 file.path('inc', 'update_albumim_fun.r') %>% source
 
