@@ -29,6 +29,12 @@ Lgstar %<>% conv_unit(from = 'nm', to = common_length)
 Lmstar %<>% conv_unit(from = 'um', to = common_length)
 Listar %<>% conv_unit(from = 'nm', to = common_length)
 
+# For concentration matrix EC 
+PE_ec <- 12 * 1e-7;  # cM/s ## [Table 1 Shripad]
+PE_nj <- 1.21 * 1e-3;  # cM/s ## [Table 1 Shripad]
+PE_ec %<>% conv_unit(from = 'cm', to = common_length)
+PE_nj %<>% conv_unit(from = 'cm', to = common_length)
+
 # volume fraction of albumim per unit total volume of region j
 gam_g <- .94 # table 1 Shripad
 gam_i <- .94 # table 1 Shripad
@@ -392,7 +398,6 @@ iota_coef %<>% c(.,
     )
 )
 iota_coef <- (PL_star / mu) * iota_coef
-
 
 
 # ================================================== #
