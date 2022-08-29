@@ -63,10 +63,10 @@ $$
 
 $$
 \begin{align}
-0 = & C(r, z) (\omega_5 - W_j \times \iota)  \\\\[10pt]  
-& C(r, z - 1) \omega_4 - \frac{PE_{ec} L^{\ast}_j }{ D^{ \ast }_j \times \gamma_g} \\\\[10pt] 
-& C(r, z - 2) \omega_6 \\\\[10pt] 
-& C(r, z + 2) \frac{PE_{ec} L^{ \ast }_j }{D^{ \ast }_j \times \gamma_i} 
+0 = & C(r, z) \times (\omega_5 - W_j \times \iota)  \\\\[10pt]  
+& C(r, z - 1) \times (\omega_4 - \frac{PE_{ec} L^{\ast}_j }{ D^{ \ast }_j \times \gamma_g} ) \\\\[10pt] 
+& C(r, z - 2) \times \omega_6 \\\\[10pt] 
+& C(r, z + 2) \times \frac{PE_{ec} L^{ \ast }_j }{D^{ \ast }_j \times \gamma_i} 
 \end{align} 
 $$
 
@@ -79,10 +79,10 @@ $$
 
 $$
 \begin{align}
-0 = & C(r, z) (\omega_2 - W_j \times \iota)  \\\\[10pt]  
-& C(r, z + 1) \omega_1 + \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j \times \gamma_i} \\\\[10pt] 
-& C(r, z + 2) \omega_3 \\\\[10pt] 
-& C(r, z - 2) - \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j \times \gamma_g} \\\\[10pt] 
+0 = & C(r, z) \times (\omega_2 - W_j \times \iota)  \\\\[10pt]  
+& C(r, z + 1) \times (\omega_1 + \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j \times \gamma_i} ) \\\\[10pt] 
+& C(r, z + 2) \times \omega_3 \\\\[10pt] 
+& C(r, z - 2) \times \frac{-PE_{ec} L^{\ast}_j}{D^{\ast}_j \times \gamma_g} \\\\[10pt] 
 \end{align} 
 $$
 
