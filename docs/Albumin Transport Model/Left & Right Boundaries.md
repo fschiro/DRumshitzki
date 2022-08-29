@@ -77,7 +77,7 @@ $$
 0 = & C(r, z) \times ( \iota \times W_j \times \gamma_5 - h_j^2 \times \beta_2 - \beta_5) +  \\\\[10pt]
 & C(r, z - 1) \times ( \iota \times W_j \times \gamma_4 - \beta_4) + \\\\[10pt]
 & C(r, z + 1) \times ( \iota \times W_j \times \gamma_6 - \beta_6) -  \\\\[10pt]
-& C(r - 1, z) \times h_j^2 \times \beta_1  \\\\[10pt]
+& C(r - 1, z) \times -1 \times h_j^2 \times \beta_1  \\\\[10pt]
 & C(r + 1, z) \times -1 \times h_j^2 \times \beta_3  \\\\[10pt]
 \end{align} 
 $$
@@ -98,7 +98,7 @@ $$
 0 = & C(r, z) \times ( \iota \times W_j \times \gamma_5 - h_j^2 \times \beta_2 - \beta_5) +  \\\\[10pt]
 & C(r, z - 1) \times ( \iota \times W_j \times \gamma_4 - \beta_4) + \\\\[10pt]
 & C(r, z + 1) \times ( \iota \times W_j \times \gamma_6 - \beta_6) -  \\\\[10pt]
-& C(r - 1, z) \times h_j^2 \times \beta_1  \\\\[10pt]
+& C(r - 1, z) \times -1 \times h_j^2 \times \beta_1  \\\\[10pt]
 & C(r + 1, z) \times -1 \times h_j^2 \times \beta_3  \\\\[10pt]
 \end{align} 
 $$
@@ -106,4 +106,4 @@ $$
 
 ## Vector   
 
-All points on boundary need $-1 h_j^2 \beta_3$ added to boundary-vector.
+All points on boundary need $-h_j^2 \beta_3$ added to boundary-vector.
