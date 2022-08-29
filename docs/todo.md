@@ -1,7 +1,18 @@
-1. Fix all variables (such as H) to include the media-intima dual-layer boundary
-2. Concentration matrix - Finestra
-3. Concentration matrix - Non-Finestra
-4. Concentration matrix - Endothelial Cell
-5. Concentration matrix - Normal-Junction
-6. Boundary vector needs to be multiplied by value of state vector for left + right + top + bottom boundaries
-7. Rumschitzki two-sided difference scheme   
+## Main  
+1. Concentration matrix - Non-Finestra  
+2. Concentration matrix - Normal-Junction  
+3. QR Factorization concentration matrix  
+4. Time-step to steady-state  
+  
+## Math  
+1. Fix all variables (such as H) to include the 2-layer intima-meda boundary  
+4. What is equation 20 for?   
+5. Boundary vector needs to be multiplied by value of state vector for left + right + top + bottom boundaries  
+  
+## Vars  
+1. Verify units table 1 versus code with Rumshitzki    
+  
+## Upgrades  
+1. Rumschitzki second-order-error difference scheme   
+
+
