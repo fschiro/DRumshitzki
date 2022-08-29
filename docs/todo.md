@@ -6,8 +6,9 @@
   
 ## Math  
 1. Fix all variables (such as H) to include the 2-layer intima-meda boundary  
-4. What is equation 20 for?   
-5. Boundary vector needs to be multiplied by value of state vector for left + right + top + bottom boundaries  
+2. What is equation 20 for?   
+3. Boundary vector needs to be multiplied by value of state vector for left + right + top + bottom boundaries  
+4. Double check math
   
 ## Vars  
 1. Verify units table 1 versus code with Rumshitzki    
