@@ -75,7 +75,7 @@ CONC_MAT %<>% map_equations_to_matrix(
     im1j = NULL, # don't need - correctly applied previously in interior section & NULL does not overwrite.
     ijp1 = -betaAlt_3,
     ijm1 = -betaAlt_1,
-    gridPoints = gridPoints_right = 
+    gridPoints = gridPoints_right
 )
 CONC_MAT %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r, 
@@ -125,39 +125,40 @@ if(any(!is.finite(CONC_MAT@x))) {
 	"Interior or outer boundaries" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
 }
 
-
-# ================================================== #
-# Intima-Media boundary - Finestra hole
-# Docs: 
-# ================================================== #
-
-intima_bottom_gridPoints <- expand.grid(136, seq(last_finestra_cell))
-media_top_gridPoints <- expand.grid(137, seq(last_finestra_cell)) 
-
-if(any(!is.finite(CONC_MAT@x))) {
-	"Intima-Media Finestra" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
-}
-
-
-# ================================================== #
-# Intima-Media boundary - Non-Finestra
-# Docs:
-# ================================================== #
-
-non_finestra_sequence_r = seq(first_non_finestra_cell, last_non_finestra_cell)
-not_finestra_intima_bottom_gridPoints = expand.grid(136, non_finestra_sequence_r)
-not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r) 
-
-
-if(any(!is.finite(CONC_MAT@x))) {
-	"Intima-Media Non-Finestra" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
-}
-
-
 # ================================================== #
 # Endothelial Cells
 # Docs: 
 # ================================================== #
+tmp_gam_g <- rep(rep(PE_ec * Lgstar / (dg * gam_g), rows_in_r), rows_in_z)
+tmp_gam_i <- rep(rep(PE_ec * Listar / (di * gam_i), rows_in_r), rows_in_z)
+
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = omega_6 - (W * iota_coef)
+    ,ip1j = zeros
+    ,im1j = omega_5 - tmp_gam_g
+    ,ip2j = tmp_gam_i
+    ,im2j = omega_4
+    ,ijp1 = zeros
+    ,ijm1 = zeros
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = ec1_gridPoints
+)
+
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = omega_3 - (W * iota_coef)
+    ,ip1j = omega_2 + tmp_gam_i
+    ,im1j = zeros 
+    ,ip2j = omega_1
+    ,im2j = NULL
+    ,ijp1 = zeros 
+    ,ijm1 = zeros 
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = -tmp_gam_g # default value is zero and we have not edited this previously
+    ,gridPoints = ec2_gridPoints
+)
 
 if(any(!is.finite(CONC_MAT@x))) {
 	"Endothelial Cell" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
@@ -168,6 +169,123 @@ if(any(!is.finite(CONC_MAT@x))) {
 # Docs: 
 # ================================================== #
 
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = zeros
+    ,ip1j = zeros
+    ,im1j = zeros
+    ,ip2j = NULL
+    ,im2j = NULL
+    ,ijp1 = zeros
+    ,ijm1 = zeros
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = nj1_gridPoints
+)
+
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = zeros
+    ,ip1j = zeros
+    ,im1j = zeros 
+    ,ip2j = NULL
+    ,im2j = NULL
+    ,ijp1 = zeros 
+    ,ijm1 = zeros 
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = nj2_gridPoints
+)
+
 if(any(!is.finite(CONC_MAT@x))) {
 	"Endothelial Cell - Normal Junction" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
+}
+
+# ================================================== #
+# Intima-Media boundary - Finestra hole
+# Docs: 
+# ================================================== #
+
+intima_bottom_gridPoints <- expand.grid(136, seq(last_finestra_cell))
+media_top_gridPoints <- expand.grid(137, seq(last_finestra_cell)) 
+
+tmp_gam_i <- rep(rep(di / Listar, rows_in_r), rows_in_z) # it is okay to repeat only i because we only applying to 1 row of matrix 
+tmp_gam_m <- rep(rep(dm / Lmstar, rows_in_r), rows_in_z) # it is okay to repeat only i because we only applying to 1 row of matrix 
+
+# IM1
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = tmp_gam_i * (-iota_coef * W + omega_3) + 1 / gam_i
+    ,ip1j = -tmp_gam_m * (omega_6 + iota_coef * W) - 1 / gam_m
+    ,im1j = tmp_gam_i * omega_2
+    ,ip2j = -tmp_gam_m * omega_5
+	,ip3j = -tmp_gam_m * omega_4
+    ,im2j = tmp_gam_i * omega_1
+    ,ijp1 = zeros
+    ,ijm1 = zeros
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = intima_bottom_gridPoints
+)
+
+# IM2
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = tmp_gam_m * (-omega_6 + iota_coef * W) - 1 / gam_m
+    ,ip1j = -tmp_gam_m * omega_5
+    ,im1j = tmp_gam_i * (omega_3 - iota_coef * W) + 1 / gam_i 
+    ,ip2j = -tmp_gam_m * omega_4
+    ,im2j = tmp_gam_i * omega_2
+	,im3j = tmp_gam_i * omega_1
+    ,ijp1 = zeros 
+    ,ijm1 = zeros 
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = media_top_gridPoints
+)
+
+
+if(any(!is.finite(CONC_MAT@x))) {
+	"Intima-Media Finestra" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
+}
+
+# ================================================== #
+# Intima-Media boundary - Non-Finestra
+# Docs:
+# ================================================== #
+
+non_finestra_sequence_r = seq(first_non_finestra_cell, last_non_finestra_cell)
+not_finestra_intima_bottom_gridPoints = expand.grid(136, non_finestra_sequence_r)
+not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r) 
+
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = zeros
+    ,ip1j = zeros
+    ,im1j = zeros
+    ,ip2j = NULL
+    ,im2j = NULL
+    ,ijp1 = zeros
+    ,ijm1 = zeros
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = not_finestra_intima_bottom_gridPoints
+)
+
+CONC_MAT %<>% map_equations_to_matrix(
+    rows_in_z, rows_in_r
+    ,ij = zeros
+    ,ip1j = zeros
+    ,im1j = zeros 
+    ,ip2j = NULL
+    ,im2j = NULL
+    ,ijp1 = zeros 
+    ,ijm1 = zeros 
+    ,ijp2 = NULL # default value is zero and we have not edited this previously
+    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,gridPoints = not_finestra_media_top_gridPoints
+)
+
+if(any(!is.finite(CONC_MAT@x))) {
+	"Intima-Media Non-Finestra" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
 }
