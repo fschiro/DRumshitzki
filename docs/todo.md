@@ -1,8 +1,10 @@
 ## Main  
-1. Concentration matrix - Non-Finestra  
-2. Concentration matrix - Normal-Junction  
-3. QR Factorization concentration matrix  
-4. Time-step to steady-state  
+1. Concentration matrix - Verify endothelial cell
+2. Concentration matrix - endothelial cell - Normal Junction
+3. Concentration matrix - Intima-Media::Finestra  
+4. Concentration matrix - Intima-Media::Non-Finestra  
+5. QR Factorization concentration matrix  
+6. Time-step to steady-state  
   
 ## Math  
 1. Fix all variables (such as H) to include the 2-layer intima-meda boundary  
