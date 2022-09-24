@@ -13,7 +13,8 @@ R PDE Solver - Pre-atherosclerotic ﬂow and oncotically active solute transport
   3. [GX-Intima Boundary: Normal Junction](./docs/Endothelial%20Cell%20Normal%20Junction.md)  
   4. [Intima-Media Boundary: Finestra](./docs/Intima-Media%20Finestra.md)  
   5. [Intima-Media Boundary: Non-Finestra](./docs/Intima-Media%20Non-Finestra.md)  
-4. [Solution Scheme](./docs/Solving%20Matrix%20Equations.md)
+4. [Building the Concentration Matrix](#buildingConcentrationMatrix)
+5. [Solution Scheme](./docs/Solving%20Matrix%20Equations.md)
 
 
 
