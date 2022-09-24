@@ -2,21 +2,27 @@
 R PDE Solver - Pre-atherosclerotic ﬂow and oncotically active solute transport across the arterial endothelium
 
 
-# Table of contents
+# Table of contents  
+
 1. [Introduction](#introduction)
 2. [The Domain](#domainOutline)
 3. [Building the Pressure Matrix](#buildingPressureMatrix)
-  1. [Interior Grid-Points](./docs/Interior%20Grid%20Points.md)  
-    i. [Left and Right Boundary](./docs/Left%20%26%20Right%20Boundaries.md)  
-    ii. [Top and Bottom Boundary](./docs/Top%20%26%20Bottom%20Boundaries.md)  
-  2. [GX-Intima Boundary: Endothelial Cell](./docs/Endothelial%20Cell.md)
-  3. [GX-Intima Boundary: Normal Junction](./docs/Endothelial%20Cell%20Normal%20Junction.md)  
-  4. [Intima-Media Boundary: Finestra](./docs/Intima-Media%20Finestra.md)  
-  5. [Intima-Media Boundary: Non-Finestra](./docs/Intima-Media%20Non-Finestra.md)  
-4. [Building the Concentration Matrix](#buildingConcentrationMatrix)
-5. [Solution Scheme](./docs/Solving%20Matrix%20Equations.md)
-
-
+    1. [Interior Grid-Points](./docs/Interior%20Grid%20Points.md)   
+        1. [Left and Right Boundary](./docs/Left%20%26%20Right%20Boundaries.md) 
+        2. [Top and Bottom Boundary](./docs/Top%20%26%20Bottom%20Boundaries.md)  
+    3. [GX-Intima Boundary: Endothelial Cell](./docs/Endothelial%20Cell.md)
+    4. [GX-Intima Boundary: Normal Junction](./docs/Endothelial%20Cell%20Normal%20Junction.md) 
+    5. [Intima-Media Boundary: Finestra](./docs/Intima-Media%20Finestra.md)  
+    6. [Intima-Media Boundary: Non-Finestra](./docs/Intima-Media%20Non-Finestra.md)  
+4. [Building the Concentration Matrix](#buildingConcentrationMatrix) 
+    1. [Interior Grid-Points]
+        1. [Left and Right Boundary]
+        2. [Top and Bottom Boundary]
+    3. [GX-Intima Boundary: Endothelial Cell]  
+    4. [GX-Intima Boundary: Normal Junction]   
+    5. [Intima-Media Boundary: Finestra]  
+    6. [Intima-Media Boundary: Non-Finestra]
+6. [Solution Scheme](./docs/Solving%20Matrix%20Equations.md)
 
 
 ## This is the introduction <a name="introduction"></a>
