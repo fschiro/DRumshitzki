@@ -31,6 +31,8 @@ $$
 & U^{\ast}, W^{\ast} \text{ are the dimensional velocities in r and z directions } \\\\[10pt]
 & r_f^{\ast}, L_j^{\ast} \text{ are region thickness and finestral pore radii } \\\\[10pt]
 & h_j = \frac{L_j^{\ast}}{r_f^{\ast}} \\\\[10pt]
+& U_j^{\ast} = U_j \times \frac{Kp_j}{\mu}\frac{P_l^{\ast}}{r_f^{\ast}} \text{ From Shripad} \\\\[10pt]
+& W_j^{\ast} = W_j \times \frac{Kp_j}{\mu}\frac{P_l^{\ast}}{L_j^{\ast}} \text{ From Shripad} \\\\[10pt]
 \end{align}
 $$
 
@@ -40,6 +42,17 @@ As shown in (link to interior grid equations), the discritization of the interio
 
 Let $\iota = \frac{f_j Pl^{\ast} }{\gamma_j D_j^{\ast}} \frac{Kp_j}{\mu} $  
 Then, 
+
+$$
+\begin{align}
+P_{erj} & = \frac{f_j r_f^{\ast}}{\gamma_j D_j^{\ast}} \times U_j^{\ast} \\\\[10pt]
+& = \frac{f_j r_f^{\ast}}{\gamma_j D_j^{\ast}} \times \frac{Kp_j}{\mu}\frac{P_l^{\ast}}{r_f^{\ast}} \times U_j \\\\[10pt]
+& = \frac{f_j P_l^{\ast}}{\gamma_j D_j^{\ast}} \times \frac{Kp_j}{\mu} \times U_j \\\\[10pt]
+& = \iota \times U_j \\\\[10pt]
+\end{align}
+$$
+
+WLOG,  
 
 $$
 \begin{align}
