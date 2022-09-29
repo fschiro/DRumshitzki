@@ -27,7 +27,7 @@ $$
 \begin{align}
 & P_{erj} = \frac{f_j U_j^{\ast} r_f^{\ast}}{\gamma_j D_j^{\ast}} \\\\[10pt]
 & P_{ezj} = \frac{f_j W_j^{\ast} L_j^{\ast}}{\gamma_j D_j^{\ast}} \\\\[10pt]
-& h_j, f_j, \gamma_j, D_j^{\ast}, r_f^{\ast}, L_j^{\ast}, PE_{ec}, PE_{nj} \text{ are region-specific constants} \\\\[10pt]
+& h_j, f_j, \gamma_j, D_j^{\ast}, r_f^{\ast}, L_j^{\ast}, PE_{ec}, PE_{nj}, \sigma_{nj}, \sigma_{EC} \text{ are region-specific constants} \\\\[10pt]
 & U^{\ast}, W^{\ast} \text{ are the dimensional velocities in r and z directions } \\\\[10pt]
 & r_f^{\ast}, L_j^{\ast} \text{ are region thickness and finestral pore radii } \\\\[10pt]
 & h_j = \frac{L_j^{\ast}}{r_f^{\ast}} \\\\[10pt]
