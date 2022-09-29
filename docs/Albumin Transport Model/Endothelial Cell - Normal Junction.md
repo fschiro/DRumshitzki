@@ -13,11 +13,12 @@ For derivatives we are using one-sided second-order difference at the boundary.
 
 ## Equations
 
-Equation (18) from Shripad 2020
+Equation (19, 20) from Shripad 2020
 
 $$
 \begin{align}
-& \frac{\partial C_j}{\partial z_j} - P_{ezj} C_j = \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \\\\[10pt]
+& \frac{\partial C_i}{\partial z_i} - P_{ezi} C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_i^{\ast} L_i^{\ast}}{D_i^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+&\frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - P_{ezg}C_g) = \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  P_{ezi}C_i))
 \end{align}
 $$
 
@@ -61,12 +62,32 @@ P_{ezj} = & W_j \times \iota   \\\\[10pt]
 \end{align}
 $$ 
 
-Plugging $\iota$ into the interior equation:  
+Plugging $\iota$ into equations 19:  
 
 $$
 \begin{align}
-& \frac{\partial C_j}{\partial z_j} - P_{ezj} C_j = \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \\\\[10pt]
-& \frac{\partial C_j}{\partial z_j} - W_j \times \iota \times C_j = \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \\\\[10pt]
+& \frac{\partial C_i}{\partial z_i} - P_{ezi} C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_i^{\ast} L_i^{\ast}}{D_i^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_i}{\partial z_i} - W_i \times \iota C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_i K_{pi}}{\mu} \frac{P_l^{\ast}}{L_i^{\ast}}\frac{ L_i^{\ast}}{D_i^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_i}{\partial z_i} - W_i \times \iota C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - W_i \times \iota \times \frac{\gamma_i}{f_i} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_i}{\partial z_i} + W_i \times \iota (-C_i + \frac{\gamma_i}{f_i} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i})
+\end{align}
+$$
+
+Plugging $\iota$ into equations 19:    
+
+$$
+\begin{align}
+&\frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - P_{ezg}C_g) = \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  P_{ezi}C_i)) \\\\[10pt]
+&\frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - \iota \times W_g C_g) = \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  \iota \times W_i C_i)) \\\\[10pt]
+\end{align}
+$$
+
+Combining equations 19 and 20:    
+
+$$
+\begin{align}
+& \frac{\partial C_i}{\partial z_i} + W_i \times \iota (-C_i + \frac{\gamma_i}{f_i} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) + 
+\frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - \iota \times W_g C_g) - \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  \iota \times W_i C_i)) = 0
 \end{align}
 $$
 
