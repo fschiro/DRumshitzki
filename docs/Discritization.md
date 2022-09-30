@@ -40,8 +40,8 @@ $$
 
 $$
 \begin{align}
-&\frac{\partial^2 P}{\partial z^2}  =  \omega_1 * P(r, z + h_1 + h_2) +  \omega_2 * P(r, z + h_1) +  \omega_3 * P(r, z) \\\\[10pt]  
-&\frac{\partial^2 P}{\partial z^2}  =  \omega_4 * P(r, z - h_1 - h_2) +  \omega_5 * P(r, z - h_1) +  \omega_6 * P(r, z) \\\\[10pt]  
+&\frac{\partial P}{\partial z}  =  \omega_1 * P(r, z + h_1 + h_2) +  \omega_2 * P(r, z + h_1) +  \omega_3 * P(r, z) \\\\[10pt]  
+&\frac{\partial P}{\partial z}  =  \omega_4 * P(r, z - h_1 - h_2) +  \omega_5 * P(r, z - h_1) +  \omega_6 * P(r, z) \\\\[10pt]  
 \end{align} 
 $$
 
