@@ -1,4 +1,4 @@
-# Endothelial Cell
+# Intima-Media Finestral Hole
 
 There are two rows in the grid for this boundary.
 
