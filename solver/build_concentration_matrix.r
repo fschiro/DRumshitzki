@@ -127,7 +127,7 @@ if(any(!is.finite(CONC_MAT@x))) {
 
 # ================================================== #
 # Endothelial Cells
-# Docs: 
+# Docs: https://github.com/fschiro/DRumshitzki/blob/main/docs/Albumin%20Transport%20Model/Endothelial%20Cell.md
 # ================================================== #
 tmp_gam_g <- rep(rep(PE_ec * Lgstar / (dg * gam_g), rows_in_r), rows_in_z)
 tmp_gam_i <- rep(rep(PE_ec * Listar / (di * gam_i), rows_in_r), rows_in_z)
@@ -260,11 +260,11 @@ not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r)
 
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
-    ,ij = zeros
+    ,ij = omega_6
     ,ip1j = zeros
-    ,im1j = zeros
+    ,im1j = omega_5
     ,ip2j = NULL
-    ,im2j = NULL
+    ,im2j = omega_4
     ,ijp1 = zeros
     ,ijm1 = zeros
     ,ijp2 = NULL # default value is zero and we have not edited this previously
@@ -274,12 +274,12 @@ CONC_MAT %<>% map_equations_to_matrix(
 
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
-    ,ij = zeros
-    ,ip1j = zeros
+    ,ij = omega_3
+    ,ip1j = omega_2
     ,im1j = zeros 
     ,ip2j = NULL
     ,im2j = NULL
-    ,ijp1 = zeros 
+    ,ijp1 = omega_1 
     ,ijm1 = zeros 
     ,ijp2 = NULL # default value is zero and we have not edited this previously
     ,ijm2 = NULL # default value is zero and we have not edited this previously
@@ -289,3 +289,4 @@ CONC_MAT %<>% map_equations_to_matrix(
 if(any(!is.finite(CONC_MAT@x))) {
 	"Intima-Media Non-Finestra" %>% sprintf("ERROR: Non-finite values entered in concentration matrix @ %s", .) %>% stop()
 }
+
