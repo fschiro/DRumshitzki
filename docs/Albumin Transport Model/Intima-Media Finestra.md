@@ -53,7 +53,7 @@ Plugging $\iota$ into the interior equation:
 
 $$
 \begin{align}
-0 = & \frac{D_i}{L^{\ast}_i} \times ( \frac{\partial C_i}{\partial z_i} - P_{ezi} \times C_i) - \frac{D_m}{L^{\ast}_m} \times ( \frac{\partial C_m}{\partial z_m} - P_{ezm} \times C_m) + \frac{C_i}{\gamma_i} - \frac{C_m}{\gamma_m} \\\\[10pt]
+0 = & \frac{D_i}{L^{\ast}_i} \times ( \frac{\partial C_i}{\partial z_i} - \iota \times W_i \times C_i) - \frac{D_m}{L^{\ast}_m} \times ( \frac{\partial C_m}{\partial z_m} - \iota \times W_m \times C_m) + \frac{C_i}{\gamma_i} - \frac{C_m}{\gamma_m} \\\\[10pt]
 \end{align}
 $$
 
