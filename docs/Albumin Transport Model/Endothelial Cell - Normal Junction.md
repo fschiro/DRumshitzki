@@ -73,7 +73,7 @@ $$
 \end{align}
 $$
 
-Plugging $\iota$ into equations 19:    
+Plugging $\iota$ into equations 20:    
 
 $$
 \begin{align}
