@@ -127,7 +127,7 @@ $$
 
 ### EC2
 
-At EC1, $\kappa_g = \kappa(r, z-2)$ and $\kappa_i = \kappa(r, z+1)$. Then,  
+At EC2, $\kappa_g = \kappa(r, z-2)$ and $\kappa_i = \kappa(r, z+1)$. Then,  
 
 $$
 \begin{align}
