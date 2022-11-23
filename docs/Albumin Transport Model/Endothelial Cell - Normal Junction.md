@@ -1,4 +1,4 @@
-# Endothelial Cell
+# Endothelial Cell at Normal Junction
 
 There are two rows in the grid for this boundary.
 
@@ -34,6 +34,7 @@ $$
 & h_j = \frac{L_j^{\ast}}{r_f^{\ast}} \\\\[10pt]
 & U_j^{\ast} = U_j \times \frac{Kp_j}{\mu}\frac{P_l^{\ast}}{r_f^{\ast}} \text{ From Shripad} \\\\[10pt]
 & W_j^{\ast} = W_j \times \frac{Kp_j}{\mu}\frac{P_l^{\ast}}{L_j^{\ast}} \text{ From Shripad} \\\\[10pt]
+& \bar{C} = \frac{1}{2} \times ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \\\\[10pt]
 \end{align}
 $$
 
