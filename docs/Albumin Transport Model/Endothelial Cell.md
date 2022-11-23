@@ -73,6 +73,8 @@ $$
 # Discritization
 
 ### EC1
+  
+At EC1, $\kappa_g = \kappa(r, z-1)$ and $\kappa_i = \kappa(r, z+2)$. Then,    
 
 $$
 \begin{align}
@@ -89,6 +91,8 @@ $$
 
 
 ### EC2
+
+At EC2, $\kappa_g = \kappa(r, z-2)$ and $\kappa_i = \kappa(r, z+1)$. Then,  
 
 $$
 \begin{align}
