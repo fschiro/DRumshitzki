@@ -38,7 +38,7 @@ $$
 
 ## Transforming The Equations
 
-As shown in (link to interior grid equations), the discritization of the interior equation is as follows: 
+As shown in (link to interior grid equations), the discretization of the interior equation is as follows: 
 
 Let $\iota = \frac{f_j Pl^{\ast} }{\gamma_j D_j^{\ast}} \frac{Kp_j}{\mu} $  
 Then, 
@@ -70,7 +70,7 @@ $$
 \end{align}
 $$
 
-# Discritization
+# Discretization
 
 ### EC1
   
