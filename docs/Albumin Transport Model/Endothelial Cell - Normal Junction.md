@@ -85,7 +85,7 @@ $$
 &\frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - \iota \times W_g C_g) = \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  \iota \times W_i C_i)) \\\\[10pt]
 \end{align}
 $$
-
+<!-- 
 Plugging $\bar{C} = \frac{1}{2} \times ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i})$ into equations 19:  
 
 $$
@@ -95,12 +95,12 @@ $$
 & \frac{\partial C_j}{\partial z_j} - W_i \times \iota \times C_j + ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \times (W_i \frac{\iota \times \gamma_j}{2 \times f_j} (1 - \sigma_{nj} ) -  \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} )
 \end{align}
 $$
-
+ -->
 Combining equations 19 and 20:    
 
 $$
 \begin{align}
-& \frac{\partial C_j}{\partial z_j} - W_i \times \iota \times C_j + ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \times (W_i \frac{\iota \times \gamma_j}{2 \times f_j} (1 - \sigma_{nj} ) -  \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ) + 
+& \frac{\partial C_j}{\partial z_j} + W_i \times \iota (-C_j + \frac{\gamma_j}{f_j} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) +
 \frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - \iota \times W_g C_g) - \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  \iota \times W_i C_i)) = 0
 \end{align}
 $$
@@ -109,11 +109,12 @@ $$
 
 ### EC1
 
-At EC1 we apply equation 19 + 20. For dummy variable $\kappa$, $\kappa_g = \kappa(r, z-1)$ and $\kappa_i = \kappa(r, z+2)$. Then,  
+At EC1 we apply equation 19 + 20 and replace $\bar{C}$ with $\frac{1}{2} \times ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i})$. For dummy variable $\kappa$, $\kappa_g = \kappa(r, z-1)$ and $\kappa_i = \kappa(r, z+2)$. Then,  
+
 
 $$
 \begin{align}
-0 = &C_j \omega_6 + C_{j-1} \omega_5 + C_{j-2} \omega_4 - W_j \iota C_j + W_j \iota \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) \bar{C} \\\\[10pt]
+0 = &C_j \omega_6 + C_{j-1} \omega_5 + C_{j-2} \omega_4 - W_j \iota C_j + \frac{W_j \iota}{2} \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) ( \frac{C_{j-1}}{\gamma_g} - \frac{C_{j+2}}{\gamma_i} ) \\\\[10pt]
 & - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast}} ( \frac{C_{j-1}}{\gamma_g} - \frac{C_{j+2}}{\gamma_i} ) \\\\[10pt]
 & + \frac{D_g^{\ast}}{L_g^{\ast}}( C_{j-1} \omega_6 + C_{j-2} \omega_5 + C_{j-3} \omega_4 - \iota W_{j-1} C_{j-1})  \\\\[10pt]
 & - \frac{D_i^{\ast}}{L_i^{\ast}}( C_{j+2} \omega_3 + C_{j+3} \omega_2 + C_{j+4} \omega_1 - \iota W_{j+2} C_{j+2})  \\\\[10pt]
@@ -125,16 +126,16 @@ This becomes:
 $$
 \begin{align}
 0 = & C(r, z) \times ( \omega_6 - W_j \iota ) +   \\\\[10pt]
-& C(r, z - 1) \times ( \omega_5 - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_g} + \frac{D_g^{\ast}}{L_g^{\ast}} \omega_6 - \frac{D_g^{\ast}}{L_g^{\ast}} \iota W_{j-1} ) +   \\\\[10pt]
+& C(r, z - 1) \times ( \omega_5 - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_g} + \frac{D_g^{\ast}}{L_g^{\ast}} \omega_6 - \frac{D_g^{\ast}}{L_g^{\ast}} \iota W_{j-1} + \frac{W_j \iota}{2 \gamma_g} \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) ) +   \\\\[10pt]
 & C(r, z - 2) \times ( \omega_4  + \frac{D_g^{\ast}}{L_g^{\ast}} \omega_5 ) +   \\\\[10pt]
 & C(r, z - 3) \times (  + \frac{D_g^{\ast}}{L_g^{\ast}} \omega_4 ) +   \\\\[10pt]
 & C(r, z + 1) \times ( ) +   \\\\[10pt]
-& C(r, z + 2) \times ( - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_i} - \frac{D_i^{\ast}}{L_i^{\ast}} \omega_3 + \frac{D_i^{\ast}}{L_i^{\ast}} \iota W_{j+2} ) +   \\\\[10pt]
+& C(r, z + 2) \times ( - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_i} - \frac{D_i^{\ast}}{L_i^{\ast}} \omega_3 + \frac{D_i^{\ast}}{L_i^{\ast}} \iota W_{j+2} - \frac{W_j \iota}{2 \gamma_i} \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) ) +   \\\\[10pt]
 & C(r, z + 3) \times ( - \frac{D_i^{\ast}}{L_i^{\ast}} \omega_2 ) +   \\\\[10pt]
 & C(r, z + 4) \times ( - \frac{D_i^{\ast}}{L_i^{\ast}} \omega_1 ) +  \\\\[10pt]
-& W_j \iota \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) \bar{C}  \\\\[10pt]
 \end{align} 
 $$
+
 
 
 
@@ -148,16 +149,14 @@ $$
 \end{align} 
 $$  
 
+This becomes:  
+
 $$
 \begin{align}
 0 = & C(r, z) \times ( \omega_3 - W_j \iota ) + \\\\[10pt]
-& C(r, z - 1) \times (  ) + \\\\[10pt]
 & C(r, z - 2) \times ( - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_g }  ) + \\\\[10pt]
-& C(r, z - 3) \times ( ) + \\\\[10pt]
 & C(r, z + 1) \times ( \omega_2 + \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_i } ) + \\\\[10pt]
-& C(r, z + 2) \times ( \omega_1  ) + \\\\[10pt]
-& C(r, z + 3) \times ( ) + \\\\[10pt]
-& C(r, z + 4) \times (  ) + \\\\[10pt]
+& C(r, z + 2) \times \omega_1   + \\\\[10pt]
 & W_j \iota \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) \bar{C}  \\\\[10pt]
 \end{align} 
 $$
