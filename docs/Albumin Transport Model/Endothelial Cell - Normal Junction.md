@@ -17,10 +17,10 @@ Equation (19, 20) from Shripad 2020
 
 $$
 \begin{align}
-& \frac{\partial C_i}{\partial z_i} - P_{ezi} C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_i^{\ast} L_i^{\ast}}{D_i^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_j}{\partial z_j} - P_{ezj} C_j = \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_j^{\ast} L_j^{\ast}}{D_j^{\ast}} (1 - \sigma_{nj} ) \bar{C}; \\enspace j \in (g, i)  \\\\[10pt]
 &\frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - P_{ezg}C_g) = \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  P_{ezi}C_i))
 \end{align}
-$$
+$$  
 
 Where:   
 
@@ -36,7 +36,9 @@ $$
 & W_j^{\ast} = W_j \times \frac{Kp_j}{\mu}\frac{P_l^{\ast}}{L_j^{\ast}} \text{ From Shripad} \\\\[10pt]
 & \bar{C} = \frac{1}{2} \times ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \\\\[10pt]
 \end{align}
-$$
+$$  
+  
+Note: Equation 19 modified to span over $j=g,i$ after speaking with P. Rumshitzki. 
 
 ## Transforming The Equations
 
