@@ -39,6 +39,7 @@ $$
 $$  
   
 Note: Equation 19 modified to span over $j=g,i$ after speaking with P. Rumshitzki. 
+Equation 19 will be applied to both EC 1 + 2 while equation 20 can be applied at random to either side of the EC. Thus we will apply equation 20 to EC1. 
 
 ## Transforming The Equations
 
@@ -69,10 +70,10 @@ Plugging $\iota$ into equations 19:
 
 $$
 \begin{align}
-& \frac{\partial C_i}{\partial z_i} - P_{ezi} C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_i^{\ast} L_i^{\ast}}{D_i^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
-& \frac{\partial C_i}{\partial z_i} - W_i \times \iota C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_i K_{pi}}{\mu} \frac{P_l^{\ast}}{L_i^{\ast}}\frac{ L_i^{\ast}}{D_i^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
-& \frac{\partial C_i}{\partial z_i} - W_i \times \iota C_i = \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - W_i \times \iota \times \frac{\gamma_i}{f_i} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
-& \frac{\partial C_i}{\partial z_i} + W_i \times \iota (-C_i + \frac{\gamma_i}{f_i} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i})
+& \frac{\partial C_j}{\partial z_j} - P_{ezj} C_j = \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_j^{\ast} L_j^{\ast}}{D_j^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_j}{\partial z_j} - W_j \times \iota C_j = \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - \frac{W_j K_{pj}}{\mu} \frac{P_l^{\ast}}{L_j^{\ast}}\frac{ L_j^{\ast}}{D_j^{\ast}} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_j}{\partial z_j} - W_j \times \iota C_j = \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) - W_j \times \iota \times \frac{\gamma_j}{f_j} (1 - \sigma_{nj} ) \bar{C} \\\\[10pt]
+& \frac{\partial C_j}{\partial z_j} + W_i \times \iota (-C_j + \frac{\gamma_j}{f_j} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i})
 \end{align}
 $$
 
@@ -89,7 +90,7 @@ Combining equations 19 and 20:
 
 $$
 \begin{align}
-& \frac{\partial C_j}{\partial z_j} + W_j \times \iota (-C_j + \frac{\gamma_j}{f_j} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_i}{D^{\ast}_i} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) + 
+& \frac{\partial C_j}{\partial z_j} + W_j \times \iota (-C_j + \frac{\gamma_j}{f_j} (1 - \sigma_{nj} ) \bar{C}) - \frac{PE_{nj} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) + 
 \frac{ D_g^{\ast} }{ L_g^{\ast} }( \frac{\partial C_g}{\partial z_g} - \iota \times W_g C_g) - \frac{ D_i^{\ast} }{ L_i^{\ast} } (\frac{\partial C_i}{\partial z_i} -  \iota \times W_i C_i)) = 0
 \end{align}
 $$
