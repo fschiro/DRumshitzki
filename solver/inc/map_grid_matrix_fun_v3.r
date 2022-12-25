@@ -8,6 +8,8 @@ xMapG <- function(stateVector, gridRows = 3, gridCols = 4){
 }
 
 gMapX <- function(gridPoints, gridRows = 3, gridCols = 4){
+    # map a matrix of grid-values to a state vector
+    
     # i = row of physical grid
     # j = column of physical grid
     # matrix A's dimension is: NM x NM where N=gridRows, M=gridCols

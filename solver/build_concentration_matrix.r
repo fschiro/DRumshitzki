@@ -19,9 +19,10 @@ CONC_MAT <- Matrix(nrow = gridDimension, ncol = gridDimension, data = 0, sparse 
 CONC_BV <- Matrix(nrow = gridDimension, ncol = 1, data = 0, sparse = TRUE)
 
 # W (non-dimensional)
-W = DFDZ %*% PRESSURE  # W = dPdz
+W = DFDZ %*% PRESSURE  # W = dPdz (state vector)
 # U (non-dimensional)
-U = DFDR %*% PRESSURE # U = dPdr
+U = DFDR %*% PRESSURE # U = dPdr (state vector)
+# Need: W_{j-1}
 
 # =========================================================================================================================== #
 # Main equations over all points
@@ -166,8 +167,24 @@ if(any(!is.finite(CONC_MAT@x))) {
 
 # ================================================== #
 # Endothelial Cells - normal junction (space between EC)
-# Docs: 
+# Docs: https://github.com/fschiro/DRumshitzki/blob/main/docs/Albumin%20Transport%20Model/Endothelial%20Cell%20-%20Normal%20Junction.md
 # ================================================== #
+
+# We need W_{j-1}, W_{j-2}, W_{j+1}
+# W is a state-vector (row_1, ...m row_z)
+# to get row prior we can just pad with fake row because we only care about endothelial cell
+# ie. W_{j-1} = (fake-row, W_1, W_2, ..., W_{n-1})
+# W_{j-2} = (fake-row, fake-row, W_1, W_2, ..., W_{n-2})
+# W_{j+1} = (W_1, W_2, ..., W_{n-1}, fake-row)
+# concatenate Matrix bc W is Mx1 matrix
+# a<-matrix(nrow=10,ncol=5)
+# b<-matrix(nrow=20,ncol=5)
+# dim(rbind(a,b))
+
+fake_row <- matrix(nrow=rows_in_r,ncol=1, data = 0, sparse = TRUE)
+W_jm1 <- rbind(fake_row, W[1:(length(W) - rows_in_r), ])
+W_jm2 <- rbind(fake_row, W_jm1[1:(length(W) - rows_in_r), ])
+W_jp1 <- rbind(W[(rows_in_r + 1):length(W), ], fake_row)
 
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
@@ -257,6 +274,12 @@ if(any(!is.finite(CONC_MAT@x))) {
 non_finestra_sequence_r = seq(first_non_finestra_cell, last_non_finestra_cell)
 not_finestra_intima_bottom_gridPoints = expand.grid(136, non_finestra_sequence_r)
 not_finestra_media_top_gridPoints = expand.grid(137, non_finestra_sequence_r) 
+
+tmp_gam_g <- rep(rep(PE_nj * Lgstar / (dg * gam_g), rows_in_r), rows_in_z)
+tmp_gam_i <- rep(rep(PE_nj * Listar / (di * gam_i), rows_in_r), rows_in_z)
+
+
+tmp_gam_m * (-omega_6 + iota_coef * W) - 1 / gam_m
 
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
