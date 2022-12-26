@@ -36,8 +36,11 @@ PRESSURE_BV %<>% pressure_bv_albumim_updater(CONCENTRATION)
 # ======================================================== #
 # Active dev below:
 # Todo:
-#    1. Create framework for concentration matrix
-#    2. Build concentration matrix
+#    1. EQ 24 is concentration matrix with time element
+#    2. Create EQ 24 in matrix form w and w/ time element (no time = eq14 = current conc_matrix)
+#    3. Scheme: 
+#           A. solve eq 24 -> get concentration
+#           B. CYLCE[update pressure matrix -> solve pressure -> update concentration -> solve concentration t++]
 #    3. Fix variable units (mm vs m, mm^2 vs m^2) 
 #		Use function to convert, put function in depend.r
 #    4. Rumschitzki two-sided difference scheme
