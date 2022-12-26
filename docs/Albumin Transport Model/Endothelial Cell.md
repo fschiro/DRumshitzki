@@ -17,7 +17,7 @@ Equation (18) from Shripad 2020
 
 $$
 \begin{align}
-& \frac{\partial C_j}{\partial z_j} - P_{ezj} C_j = \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) \\\\[10pt]
+& \frac{\partial C_j}{\partial z_j} - P_{ezj} C_j = \frac{PE_{ec} L^{\ast}_j}{D^{\ast}_j} ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i}) ; \\enspace j \in (g, i) \\\\[10pt]
 \end{align}
 $$
 
