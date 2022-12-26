@@ -40,8 +40,10 @@ map_equations_to_matrix <- function(
         A, rows_in_z, rows_in_r, ij = NULL, 
         ip1j = NULL, ip2j = NULL, ip3j = NULL, im1j = NULL, im2j = NULL, im3j = NULL,
         ijp1 = NULL, ijp2 = NULL, ijp3 = NULL, ijm1 = NULL, ijm2 = NULL, ijm3 = NULL, 
+        ip4j = NULL, im4j = NULL, ijp4 = NULL, ijm4 = NULL,
         gridPoints = NULL
     ){
+        
     # gridPoints should be output of expand.grid(seq( i_points), seq(j_points) )
         # null gridpoints creates new
     # A is matrix to update
@@ -49,9 +51,9 @@ map_equations_to_matrix <- function(
     if(is.null(gridPoints)) gridPoints <- expand.grid(seq(rows_in_z), seq(rows_in_r))
     
 	df = data.frame(
-		key = c('ij', 'ip1j', 'ip2j', 'ip3j', 'im1j', 'im2j', 'im3j', 'ijp1', 'ijp2', 'ijp3', 'ijm1', 'ijm2', 'ijm3'),
-		add_i = c(0, 1, 2, 3, -1, -2, -3, 0, 0, 0, 0, 0, 0),
-		add_j = c(0, 0, 0, 0, 0, 0, 0, 1, 2, 3, -1, -2, -3)
+		key = c('ij', 'ip1j', 'ip2j', 'ip3j', 'im1j', 'im2j', 'im3j', 'ijp1', 'ijp2', 'ijp3', 'ijm1', 'ijm2', 'ijm3', 'ip4j', 'im4j', 'ijp4', 'ijm4'),
+		add_i = c(0, 1, 2, 3, -1, -2, -3, 0, 0, 0, 0, 0, 0, 4, -4, 0, 0),
+		add_j = c(0, 0, 0, 0, 0, 0, 0, 1, 2, 3, -1, -2, -3, 0, 0, 4, -4)
 	)
 	matrices = list(ij, ip1j, ip2j, ip3j, im1j, im2j, im3j, ijp1, ijp2, ijp3, ijm1, ijm2, ijm3)
 		

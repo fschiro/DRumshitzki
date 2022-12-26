@@ -207,17 +207,18 @@ CONC_MAT %<>% map_equations_to_matrix(
 )
 
 
+
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
     ,ij = omega_3 - W * iota_coef
-    ,ip1j = omega_2 + (tmp_gam_i / gam_i) 
+    ,ip1j = omega_2 + (tmp_gam_i / gam_i) - (W * iota_coef) * (1 / fi) * (1 - sigma_nj) * (1 / 2)
     ,im1j = zeros 
-    ,ip2j = omega_1 + W * iota_coef * (gam_i / fi) * (1-sigma_nj) * CBAR
-    ,im2j = -(tmp_gam_i / gam_g)
+    ,ip2j = omega_1
+    ,im2j = (W * iota_coef) * (gam_i / gam_g) * (1 / fi) * (1 - sigma_nj) * (1 / 2) - tmp_gam_i / gam_g
     ,ijp1 = zeros
     ,ijm1 = zeros 
-    ,ijp2 = NULL # default value is zero and we have not edited this previously
-    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,ijp2 = zeros 
+    ,ijm2 = zeros 
     ,gridPoints = nj2_gridPoints
 )
 
@@ -227,7 +228,7 @@ if(any(!is.finite(CONC_MAT@x))) {
 
 # ================================================== #
 # Intima-Media boundary - Finestra hole
-# Docs: 
+# Docs: https://github.com/fschiro/DRumshitzki/blob/main/docs/Albumin%20Transport%20Model/Intima-Media%20Finestra.md
 # ================================================== #
 
 intima_bottom_gridPoints <- expand.grid(136, seq(last_finestra_cell))
@@ -275,7 +276,7 @@ if(any(!is.finite(CONC_MAT@x))) {
 
 # ================================================== #
 # Intima-Media boundary - Non-Finestra
-# Docs:
+# Docs: https://github.com/fschiro/DRumshitzki/blob/main/docs/Albumin%20Transport%20Model/Intima-Media%20Non-Finestra.md
 # ================================================== #
 
 non_finestra_sequence_r = seq(first_non_finestra_cell, last_non_finestra_cell)
