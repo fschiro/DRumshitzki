@@ -141,11 +141,15 @@ $$
 
 ### EC2
 
-At EC2 we apply equation 19. For dummy variable $\kappa$,  $\kappa_g = \kappa(r, z-2)$ and $\kappa_i = \kappa(r, z+1)$. Then,  
+At EC2 we apply equation 19 and replace $\bar{C}$ with $\frac{1}{2} \times ( \frac{c_g}{\gamma_g} - \frac{c_i}{\gamma_i})$. For dummy variable $\kappa$,  $\kappa_g = \kappa(r, z-2)$ and $\kappa_i = \kappa(r, z+1)$. Then,  
+
 
 $$
 \begin{align}
-0 = & C_j \omega_3 + C_{j+1} \omega_2 + C_{j+2} \omega_1 - W_j \iota C_j + W_j \iota \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) \bar{C} - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast}} ( \frac{C_{j-2}}{\gamma_g} - \frac{C_{j+1}}{\gamma_i} )
+0 = & C_j \omega_3 + C_{j+1} \omega_2 + C_{j+2} \omega_1 - W_j \iota C_j + W_j \iota \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) \bar{C} - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast}} ( \frac{C_{j-2}}{\gamma_g} - \frac{C_{j+1}}{\gamma_i} ) \\\\[10pt]
+0 = & C_j \omega_3 + C_{j+1} \omega_2 + C_{j+2} \omega_1 - W_j \iota C_j + 
+C_{j-2} \times (W_j \iota \frac{\gamma_j}{f_j \gamma_g} (1 -\sigma_{nj}) \frac{1}{2} - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_g}) + \\\\[10pt]
+& C_{j+1} \times (- W_j \iota \frac{\gamma_j}{f_j \gamma_i} (1 -\sigma_{nj}) \frac{1}{2} + \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast}\gamma_i} ) \\\\[10pt]
 \end{align} 
 $$  
 
@@ -154,9 +158,8 @@ This becomes:
 $$
 \begin{align}
 0 = & C(r, z) \times ( \omega_3 - W_j \iota ) + \\\\[10pt]
-& C(r, z - 2) \times ( - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_g }  ) + \\\\[10pt]
-& C(r, z + 1) \times ( \omega_2 + \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_i } ) + \\\\[10pt]
-& C(r, z + 2) \times \omega_1   + \\\\[10pt]
-& W_j \iota \frac{\gamma_j}{f_j} (1 -\sigma_{nj}) \bar{C}  \\\\[10pt]
+& C(r, z - 2) \times (W_j \iota \frac{\gamma_j}{f_j \gamma_g} (1 -\sigma_{nj}) \frac{1}{2} - \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_g }  ) + \\\\[10pt]
+& C(r, z + 1) \times ( \omega_2 + \frac{PE_{nj} L_j^{\ast}}{D_j^{\ast} \gamma_i } - W_j \iota \frac{\gamma_j}{f_j \gamma_i} (1 -\sigma_{nj}) \frac{1}{2}) + \\\\[10pt]
+& C(r, z + 2) \times \omega_1   \\\\[10pt]
 \end{align} 
 $$
