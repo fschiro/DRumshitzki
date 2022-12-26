@@ -8,8 +8,6 @@ xMapG <- function(stateVector, gridRows = 3, gridCols = 4){
 }
 
 gMapX <- function(gridPoints, gridRows = 3, gridCols = 4){
-    # map a matrix of grid-values to a state vector
-    
     # i = row of physical grid
     # j = column of physical grid
     # matrix A's dimension is: NM x NM where N=gridRows, M=gridCols
@@ -107,4 +105,19 @@ map_equations_to_b_vector <- function(B, rows_in_z, rows_in_r, ij = NULL, ip1j =
     }
 
     B %>% return()
+}
+
+
+shift_state_vector_in_z <- function(STATE, n = 1){
+    # shift a state vector n rows in z-direction so that STATE(i, j) becomes STATE(i, j+n)
+    # pad with zeros so that state vector dimensions are the same
+    elements <- rows_in_r * abs(n)    
+    fake_row <- Matrix(nrow = elements, ncol=1, data = 0, sparse = TRUE) %>% as.list %>% unlist
+    STATE %<>% as.list %>% unlist
+    
+    if(n > 0) STATE %<>% .[1:(length(.) - elements)] %>% c(fake_row, .)
+    if(n < 0) STATE %<>% .[(elements + 1): length(.)] %>% c(fake_row)
+    
+    STATE %>% return()
+
 }

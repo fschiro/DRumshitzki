@@ -181,33 +181,40 @@ if(any(!is.finite(CONC_MAT@x))) {
 # b<-matrix(nrow=20,ncol=5)
 # dim(rbind(a,b))
 
-fake_row <- matrix(nrow=rows_in_r,ncol=1, data = 0, sparse = TRUE)
-W_jm1 <- rbind(fake_row, W[1:(length(W) - rows_in_r), ])
-W_jm2 <- rbind(fake_row, W_jm1[1:(length(W) - rows_in_r), ])
-W_jp1 <- rbind(W[(rows_in_r + 1):length(W), ], fake_row)
+tmp_gam_g <- rep(rep(PE_nj * Lgstar / dg, rows_in_r), rows_in_z)
+tmp_gam_i <- rep(rep(PE_nj * Listar / di, rows_in_r), rows_in_z)
+
+W_jm1 <- W %>% shift_state_vector_in_z(-1)
+W_jm2 <- W %>% shift_state_vector_in_z(-2)
+W_jp1 <- W %>% shift_state_vector_in_z(1)
+W_jp2 <- W %>% shift_state_vector_in_z(2)
 
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
-    ,ij = zeros
+    ,ij = omega_6 - (W * iota_coef)
     ,ip1j = zeros
-    ,im1j = zeros
-    ,ip2j = NULL
-    ,im2j = NULL
+    ,im1j = omega_5 - (tmp_gam_g / gam_g) + dg_over_lg * (omega_6 - iota_coef * W_jm1) + (W * iota_coef * (1 - sigma_nj)) / (2 * fg)
+    ,ip2j = zeros
+    ,im2j = omega_4 + dg_over_lg * omega_5
+    ,im3j = omega_4 * dg_over_lg
     ,ijp1 = zeros
     ,ijm1 = zeros
-    ,ijp2 = NULL # default value is zero and we have not edited this previously
-    ,ijm2 = NULL # default value is zero and we have not edited this previously
+    ,ip2j = -(tmp_gam_g / gam_i) + di_over_li * (-omega_3 + iota_coef * W_jp2) - (W * iota_coef * (1 - sigma_nj)) / (2 * fg)
+    ,ijm2 = zeros
+    ,ip3j = - di_over_li * omega_2
+    ,ip4j = - di_over_li * omega_1
     ,gridPoints = nj1_gridPoints
 )
 
+
 CONC_MAT %<>% map_equations_to_matrix(
     rows_in_z, rows_in_r
-    ,ij = zeros
-    ,ip1j = zeros
+    ,ij = omega_3 - W * iota_coef
+    ,ip1j = omega_2 + (tmp_gam_i / gam_i) 
     ,im1j = zeros 
-    ,ip2j = NULL
-    ,im2j = NULL
-    ,ijp1 = zeros 
+    ,ip2j = omega_1 + W * iota_coef * (gam_i / fi) * (1-sigma_nj) * CBAR
+    ,im2j = -(tmp_gam_i / gam_g)
+    ,ijp1 = zeros
     ,ijm1 = zeros 
     ,ijp2 = NULL # default value is zero and we have not edited this previously
     ,ijm2 = NULL # default value is zero and we have not edited this previously
