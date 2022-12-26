@@ -113,6 +113,9 @@ gg <- 0.94
 gi <- 0.94
 gm <- 0.08
 
+
+dg_over_lg <- rep(rep(dg / Lgstar, rows_in_r), rows_in_z)
+di_over_li <- rep(rep(di / Listar, rows_in_r), rows_in_z)
 # ============================================================== #
 # Creating helpful math variables used in matrix creation
 # ============================================================== #

@@ -65,7 +65,8 @@ PRESSURE <- qr.coef(qr_decomp, PRESSURE_BV)
 # ======================================================== #
 
 file.path('build_concentration_matrix.r') %>% source
-
+qr_decomp <- qr(CONC_MAT, LAPACK = TRUE)
+CONCENTRATION <- qr.coef(qr_decomp, CONC_BV)
 
 # ======================================================== #
 # DEV 

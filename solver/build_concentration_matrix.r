@@ -58,7 +58,7 @@ CONC_MAT %<>% map_equations_to_matrix(
     ijm1 = -betaAlt_1,
     gridPoints = gridPoints_left
 )
-CONC_MAT %<>% map_equations_to_b_vector(
+CONC_BV %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r,
     ij = NULL, 
     ip1j = NULL, 
@@ -78,7 +78,7 @@ CONC_MAT %<>% map_equations_to_matrix(
     ijm1 = -betaAlt_1,
     gridPoints = gridPoints_right
 )
-CONC_MAT %<>% map_equations_to_b_vector(
+CONC_BV %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r, 
     ij = NULL, 
     ip1j = NULL, 
@@ -101,7 +101,7 @@ gridPoints_top = expand.grid(1, seq(rows_in_r))
 gridPoints_bot = expand.grid(rows_in_z, seq(rows_in_r))
 
 # top
-CONC_MAT %<>% map_equations_to_b_vector(
+CONC_BV %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r,
     ij = NULL, 
     ip1j = NULL, 
@@ -112,7 +112,7 @@ CONC_MAT %<>% map_equations_to_b_vector(
 )
 
 # bottom
-CONC_MAT %<>% map_equations_to_b_vector(
+CONC_BV %<>% map_equations_to_b_vector(
     rows_in_z, rows_in_r,
     ij = NULL, 
     ip1j = gam_m * (iota_coef * W * gamma_6 - beta_6), 
@@ -194,7 +194,6 @@ CONC_MAT %<>% map_equations_to_matrix(
     ,ij = omega_6 - (W * iota_coef)
     ,ip1j = zeros
     ,im1j = omega_5 - (tmp_gam_g / gam_g) + dg_over_lg * (omega_6 - iota_coef * W_jm1) + (W * iota_coef * (1 - sigma_nj)) / (2 * fg)
-    ,ip2j = zeros
     ,im2j = omega_4 + dg_over_lg * omega_5
     ,im3j = omega_4 * dg_over_lg
     ,ijp1 = zeros

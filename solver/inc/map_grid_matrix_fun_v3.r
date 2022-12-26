@@ -55,7 +55,7 @@ map_equations_to_matrix <- function(
 		add_i = c(0, 1, 2, 3, -1, -2, -3, 0, 0, 0, 0, 0, 0, 4, -4, 0, 0),
 		add_j = c(0, 0, 0, 0, 0, 0, 0, 1, 2, 3, -1, -2, -3, 0, 0, 4, -4)
 	)
-	matrices = list(ij, ip1j, ip2j, ip3j, im1j, im2j, im3j, ijp1, ijp2, ijp3, ijm1, ijm2, ijm3)
+	matrices = list(ij, ip1j, ip2j, ip3j, im1j, im2j, im3j, ijp1, ijp2, ijp3, ijm1, ijm2, ijm3, ip4j, im4j, ijp4, ijm4)
 		
 	for(i in seq(nrow(df))){
 		if(!is.null(matrices[[i]])){
