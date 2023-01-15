@@ -1,3 +1,5 @@
+# Page One
+
 $$
 \begin{align}
 f^{\prime\prime} \approx D^2 f(x) = & A f(x + h_+) + B f(x) + C f(x - h_-) \label{eq1}\tag{1} \\\\[10pt]  
@@ -75,3 +77,53 @@ A h_{++}^4 + B h_+^4 - D h_-^4 - E h_{--}^4 = 0 \\\\[10pt]
 \end{align}
 $$
 
+
+# Page Two
+
+(Special case) Also, if $h_+ = h_-$, we have the following second derivative: 
+
+$f^{\prime\prime} \approx \frac{f(x + h) - 2 h f(x) + f(x-h)}{h^2} + O(h^4)$
+
+For a first derivative, take
+
+$$
+\begin{align}
+f^\prime (x) & \approx A f(x + h) + B f(x) \\\\[10pt]
+& = A ( f(x) + f^\prime (x) h + f^ {\prime\prime} (\xi) \frac{h^2}{2} ) + B f(x)
+\end{align}
+$$
+
+Substitute $A + B + C = 0$, $Ah = 1$  
+
+Then $B = -A = \frac{-1}{h}$ and $f^\prime (x) \approx \frac{f(x + h) - f(x)}{h} + f^{\prime\prime}(\xi) \frac{h}{2}$ illegible
+
+A better approx is  
+
+$$
+\begin{align}
+f^\prime (x) & \approx A f(x + h_+) + B f(x) + C f(x-h_-) \\\\[10pt]
+& = (A + B + C) f(x) + (A h_+ - C h_-) f^\prime (x) \\\\[10pt]
+& + \frac{1}{2} (A h_+^2 + C h_- ^2) f^ {\prime\prime} (x) + \frac{1}{6} (A h_+^3 f^{\prime\prime\prime} (\xi_+) - C h_-^3 f^{\prime\prime\prime} (\xi_-)
+\end{align}
+$$
+
+Set $A + B + C = 0$, $A h_+ - C h_- = 1$, $A h_+^2 + C h_-^2 = 0$ to get:  
+
+$$
+\begin{align}
+A = \frac{h_- / h_+}{h_+ + h_-} \\\\[10pt]
+B = \frac{h_+ - h_-}{h_+ h_-} \\\\[10pt]
+C = \frac{-h_+/ h_-}{h_+ + h_-}
+\end{align}
+$$
+
+or  
+
+$$
+\begin{align}
+f^{\prime\prime} \approx \frac{h_- / h_+}{h_+ + h_-} f(x + h_+) + \frac{h_+ - h_-}{h_+ h_-} f(x) + \frac{-h_+/ h_-}{h_+ + h_-} f(x - h_-) + 
+O(\text{larger of } \frac{h_+^2 h_-}{h_+ + h_-}, \frac{h_-^2 h_+}{h_+ + h_-})
+\end{align}
+$$
+
+(Special case) note, for $h_+ = h_-$, $f^\prime (x) = \frac{1}{2h} ( f(x + h) - f(x - h) ) + O(\frac{h^2}{2})$
