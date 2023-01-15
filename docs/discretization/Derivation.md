@@ -119,6 +119,7 @@ $$
 
 or  
 
+## Note: I believe error below exists in handwritten version since C has a negative sign
 $$
 \begin{align}
 f^{\prime\prime} \approx \frac{h_- / h_+}{h_+ + h_-} f(x + h_+) + \frac{h_+ - h_-}{h_+ h_-} f(x) + \frac{-h_+/ h_-}{h_+ + h_-} f(x - h_-) + 
@@ -127,3 +128,63 @@ O(\text{larger of } \frac{h_+^2 h_-}{h_+ + h_-}, \frac{h_-^2 h_+}{h_+ + h_-})
 $$
 
 (Special case) note, for $h_+ = h_-$, $f^\prime (x) = \frac{1}{2h} ( f(x + h) - f(x - h) ) + O(\frac{h^2}{2})$
+
+
+
+# Page Three
+
+$$
+\begin{align}
+f^{\prime}(x) \approx \frac{h_- / h_+}{h_+ + h_-} f(x + h_+) + \frac{h_+ - h_-}{h_+ h_-} f(x) + \frac{h_+/ h_-}{h_+ + h_-} f(x - h_-) \\\\[10pt]
+f^{\prime}(x + h_+) \approx \frac{h_+ / h_{++}}{h_+ + h_{++}} f(x + h_+) + \frac{h_{++} - h_+}{h_+ h_{++}} f(x - h_+) + \frac{h_{++}/ h_+}{h_+ + h_{++}} f(x) \\\\[10pt]
+f^{\prime}(x - h_-) \approx \frac{h_{--} / h_-}{h_- + h_{--}} f(x) + \frac{h_{-} h_{--}}{h_- h_{--}} f(x - h_-) + \frac{h_{-}/ h_{--}}{h_- + h_{--}} f(x - h_{--}) \\\\[10pt]
+f^{\prime\prime}(x) \approx \frac{h_{-} / h_+}{h_+ + h_{-}} f^\prime(x + h_+) + \frac{h_{+} - h_{-}}{h_+ h_{-}} f^\prime(x) + \frac{h_{+}/ h_{-}}{h_+ + h_{-}} f^\prime(x - h_{-}) \\\\[10pt]
+\end{align}
+$$
+
+## One Sided Approximation For First Derivative  - Unequal Spacing
+
+$f^\prime(x) = A f(x + h_1 + h_2) + B f(x + h_1) + c f(x)$  
+
+Taylor expansion gives: 
+
+$$
+\begin{align}
+f^\prime(x) & = A (f(x) + f^\prime(x)(h_1 + h_2) + \frac{f^{\prime\prime}(x)}{2} (h_1 + h_2)^2 + ...)  \\\\[10pt]
+& + B ( f(x) + f^\prime(x) h_1 + \frac{f^{\prime\prime}(x)}{2} h_1^2 + ...) + C f(x)
+\end{align}
+$$
+  
+Equating coefficients of each derivative of $f(x)$ gives  
+
+### illegible last line of next block  
+
+$$
+\begin{align}
+f(x) \rightarrow  & 0 = A + B + C   \\\\[10pt]
+f^\prime(x) \rightarrow & 1 = A(h_1 + h_2) + B h_1
+f^{\prime\prime}(x) \rightarrow & A \frac{(h_1 + h_2)^2}{2} + B \frac{h_1^2}{2}
+\end{align}
+$$
+
+Solving gives    
+
+$$
+\begin{align}
+A = \frac{-h_1}{h2(h_1 + h_2)} \\\\[10pt]
+B = \frac{h_1 + h_2}{h_1 h_2} \\\\[10pt]
+C = -\frac{2 h_1 + h_2}{h_1 (h_1 + h_2)}
+\end{align}
+$$
+
+Similarly,   
+
+$f^\prime(x) = D f(x - h_1 - h_2) + E f(x - h_1) + F f(x)$    
+
+$$
+\begin{align}
+D = \frac{h_1}{h2(h_1 + h_2)} \\\\[10pt]
+E = -\frac{h_1 + h_2}{h_1 h_2} \\\\[10pt]
+F = \frac{2 h_1 + h_2}{h_1 (h_1 + h_2)}
+\end{align}
+$$
