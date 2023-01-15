@@ -35,3 +35,43 @@ $$
 & \frac{1}{2}(Ah_+^2 + ch_-^2)=1 \\\\[10pt] 
 \end{align} 
 $$
+
+
+Solving (4) gives 
+$A = \frac{2}{h_+(h_+ + h_-)}$, 
+$B = \frac{-2}{h_+ + h_-}$, 
+$C = \frac{2}{h_-(h_+ + h_-)}$
+
+So $f^{\prime\prime}(x) \approx \frac{2}{h_+(h_+ + h_-)} f(x + h_+) \frac{-2}{h_+ + h_-} f(x) + \frac{2}{h_-(h_+ + h_-)} f(x-h_-)$
+
+illegible (two lines about error)
+
+Should the error be too large we correct to a higher accuracy approximation by 
+$f^{\prime\prime} \approx A f(x + h_{++}) + B f(x + h_+) + C f(x) + D f(x - h_-) + E f(x - h_{--})  $
+
+This becomes:  
+
+$$
+\begin{align}
+f^{\prime\prime} & \approx (A + B + C + D + E) f(x) \\\\[10pt] 
+& + (Ah_{++} + Bh_+ - Dh_- - Eh_{--}) f^\prime(x) \\\\[10pt]
+& + \frac{1}{2}( A h_{++}^2 + B h_+^2 + D h_-^2 + E h_{--}^2) f^{\prime\prime} \\\\[10pt]
+& + \frac{1}{6}( A h_{++}^3 + B h_+^3 - D h_-^3 - E h_{--}^3) f^{\prime\prime\prime} \\\\[10pt]
+& + \frac{1}{24}( A h_{++}^4 + B h_+^4 - D h_-^4 - E h_{--}^4) f^{(4)} + \text{error term} \\\\[10pt]
+\end{align}
+$$
+
+illegible
+
+We must then solve the following: 
+
+$$
+\begin{align}
+A + B + C + D + E = 0 \\\\[10pt]
+A h_{++} + B h_+ - D h_- - E h_{--} = 0 \\\\[10pt]
+A h_{++}^2 + B h_+^2 + D h_-^2 + E h_{--}^2 = 1 \\\\[10pt]
+A h_{++}^3 + B h_+^3 - D h_-^3 - E h_{--}^3 = 0 \\\\[10pt]
+A h_{++}^4 + B h_+^4 - D h_-^4 - E h_{--}^4 = 0 \\\\[10pt]
+\end{align}
+$$
+
