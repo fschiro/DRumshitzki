@@ -20,9 +20,18 @@ Plugging (2) into (1) gives
 
 $$
 \begin{align}
-f^{\prime\prime} & \approx A f(x + h_+) + B f(x) + C f(x - h_-) \\\\[10pt]
-& = (A + B + C) f(x) + (A-h_+ - Ch_-) f^\prime(x) + \frac{1}{2}(A h_+^2 + C h_-^2) f^{\prime\prime}(x)
-+ \frac{1}{6} (A h_+^3 - C h_-^3)f^{\prime\prime\prime}(x) + 
-+ \frac{1}{24} (A h_+^4 f(\xi_+) + C h_-^4 f(\xi_-)
+f^{\prime\prime} & \approx A f(x + h_+) + B f(x) + C f(x - h_-) = \\\\[10pt]
+& (A + B + C) f(x) + (A-h_+ - Ch_-) f^\prime(x) + \frac{1}{2}(A h_+^2 + C h_-^2) f^{\prime\prime}(x) + \label{eq3}\tag{3} \\\\[10pt]
+& \frac{1}{6} (A h_+^3 - C h_-^3) f^{\prime\prime\prime}(x) + \frac{1}{24} (A h_+^4 f(\xi_+) + C h_-^4 f(\xi_-)
+\end{align} 
+$$
+  
+To get an expression for the second derivatives, we must set:
+
+$$
+\begin{align}
+& A + B + C = 0 \\\\[10pt] 
+& Ah_+ - Ch_-=0 \label{eq4}\tag{4} \\\\[10pt] 
+& \frac{1}{2}(Ah_+^2 + ch_-^2)=1 \\\\[10pt] 
 \end{align} 
 $$
