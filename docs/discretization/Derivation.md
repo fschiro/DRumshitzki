@@ -23,8 +23,8 @@ Plugging (2) into (1) gives
 $$
 \begin{align}
 f^{\prime\prime} & \approx A f(x + h_+) + B f(x) + C f(x - h_-) = \\\\[10pt]
-& (A + B + C) f(x) + (A-h_+ - Ch_-) f^\prime(x) + \frac{1}{2}(A h_+^2 + C h_-^2) f^{\prime\prime}(x) + \label{eq3}\tag{3} \\\\[10pt]
-& \frac{1}{6} (A h_+^3 - C h_-^3) f^{\prime\prime\prime}(x) + \frac{1}{24} (A h_+^4 f(\xi_+) + C h_-^4 f(\xi_-)
+& (A + B + C) f(x) + (Ah_+ - Ch_-) f^\prime(x) + \frac{1}{2}(A h_+^2 + C h_-^2) f^{\prime\prime}(x) + \label{eq3}\tag{3} \\\\[10pt]
+& \frac{1}{6} (A h_+^3 - C h_-^3) f^{\prime\prime\prime}(x) + \frac{1}{24} (A h_+^4 f(\xi_+) + C h_-^4 f(\xi_-))
 \end{align} 
 $$
   
