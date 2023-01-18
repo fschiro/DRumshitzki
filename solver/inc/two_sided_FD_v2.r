@@ -93,6 +93,11 @@ c(gamma_4, gamma_5, gamma_6) %>% max
     (dr_forward + dr_backward)[j_[1]] %>% as.character %>% sprintf ('backward + forward: %s', .) %>% print
     (dr_backward[j_[1]] / dr_forward[j_[1]]) / (dr_forward[j_[1]] + dr_backward[j_[1]]) %>% as.character %>% sprintf('coefficient: %s', .) %>% print
 }
+# [1] "backward-spacing: 0.0162999632694447"
+# [1] "forward-spacing: 8.83499495785145e-10"
+# [1] "backward / forward: 18449318.1345388"
+# [1] "backward + forward: 0.0162999641529442"
+# [1] "coefficient: 0.0162999641529442"
 
 # test_beta_2 %>% max %>% print
 # test_beta_3 %>% max %>% print
