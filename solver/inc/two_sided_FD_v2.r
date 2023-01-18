@@ -71,4 +71,31 @@ finiteTest(gamma_4, 'gamma_4')
 finiteTest(gamma_5, 'gamma_5')
 finiteTest(gamma_6, 'gamma_6')
 
+c(betaAlt_1, betaAlt_2, betaAlt_3) %>% max
+c(beta_4, beta_5, beta_6) %>% max
+c(gammaAlt_1, gammaAlt_2, gammaAlt_3) %>% max
+c(gamma_4, gamma_5, gamma_6) %>% max
 
+
+
+
+
+# ================================================== #
+# Rumschitzki scheme dev
+# ================================================== #
+{
+    test_beta_1 <- rep( (dr_backward / dr_forward) / (dr_forward + dr_backward), rows_in_z)
+
+    j_ = which(test_beta_1 == max(test_beta_1))
+    dr_backward[j_[1]] %>% as.character %>% as.character %>% sprintf('backward-spacing: %s', .) %>% print
+    dr_forward[j_[1]] %>% as.character %>% sprintf('forward-spacing: %s', .) %>% print
+    (dr_backward / dr_forward)[j_[1]] %>% as.character %>% sprintf('backward / forward: %s', .) %>% print
+    (dr_forward + dr_backward)[j_[1]] %>% as.character %>% sprintf ('backward + forward: %s', .) %>% print
+    (dr_backward[j_[1]] / dr_forward[j_[1]]) / (dr_forward[j_[1]] + dr_backward[j_[1]]) %>% as.character %>% sprintf('coefficient: %s', .) %>% print
+}
+
+# test_beta_2 %>% max %>% print
+# test_beta_3 %>% max %>% print
+# test_beta_2 <- rep((dr_forward - dr_backward) / (dr_forward * dr_backward), rows_in_z)
+# test_beta_3 <- rep((dr_forward / dr_backward) / (dr_forward + dr_backward), rows_in_z) 
+# test_beta_1 %>% max %>% print

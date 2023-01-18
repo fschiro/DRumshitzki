@@ -113,9 +113,6 @@ gg <- 0.94
 gi <- 0.94
 gm <- 0.08
 
-
-dg_over_lg <- rep(rep(dg / Lgstar, rows_in_r), rows_in_z)
-di_over_li <- rep(rep(di / Listar, rows_in_r), rows_in_z)
 # ============================================================== #
 # Creating helpful math variables used in matrix creation
 # ============================================================== #
@@ -204,7 +201,6 @@ first_non_finestra_cell <- max_finestra + 1
 last_non_finestra_cell = rows_in_r
 last_finestra_cell <- max_finestra
 last_endo_cell = max_ec
-
 
 
 # ======================================================== #
@@ -402,6 +398,13 @@ iota_coef %<>% c(.,
 )
 iota_coef <- (PL_star / mu) * iota_coef
 
+
+
+# =================================================== #
+# Etc
+# =================================================== #
+dg_over_lg <- rep(rep(dg / Lgstar, rows_in_r), rows_in_z)
+di_over_li <- rep(rep(di / Listar, rows_in_r), rows_in_z)
 
 # ================================================== #
 # Run some tests & quit program if tests fail 
